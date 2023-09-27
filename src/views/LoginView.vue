@@ -14,8 +14,9 @@
                     </div>
                     <div class="button-container justify-content-evenly">
                         <button type="submit" class="btn btn-primary card-button">Login</button>
+                        <!--Button should not reload, implement later-->
                         <button type="button" class="btn btn-primary card-button"
-                            onclick="location.href='#'">Registrieren</button>
+                            onclick="location.href='register'">Registrieren</button>
                     </div>
                 </form>
             </div>
