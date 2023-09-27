@@ -79,6 +79,46 @@ nav a:hover {
     transform: scale(1.1);
 }
 
+/* Login */
+
+.login-card {
+    padding: 20px;
+    border: none;
+    border-radius: 10px;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.registerForm {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.card-button {
+    margin-top: 10px;
+    color: #000;
+    background-color: rgba(0, 0, 0, 0);
+    border-color: #000;
+
+}
+
+.card-button:hover {
+    color: white;
+    background-color: #61a3e1;
+    border-color: #61a3e1;
+}
+
+.card-title {
+    font-size: 30px;
+}
+
+.card-text {
+    font-size: 16px;
+}
+
+
 /* Footer */
 
 footer {
