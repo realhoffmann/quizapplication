@@ -83,3 +83,37 @@
         </div>
     </div>
 </template>
+
+<script>
+import { registerUser } from '../services/register.js';
+
+export default {
+  methods: {
+    registerUser() {
+      const formData = {
+        salutation: document.getElementById('salutation').value,
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
+        email: document.getElementById('email').value,
+        country: document.getElementById('country').value,
+        password: document.getElementById('password').value,
+        confirmPassword: document.getElementById('confirm-password').value,
+      };
+
+      registerUser(formData)
+        .then((response) => {
+          console.log('User registered successfully:', response.data);
+
+          document.getElementById('success-message').classList.remove('d-none');
+        })
+        .catch((error) => {
+          console.error('Error registering user:', error);
+        });
+    },
+
+    redirectToLoginPage() {
+      this.$router.push('/login');
+    },
+  },
+};
+</script>
