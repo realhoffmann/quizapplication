@@ -6,33 +6,37 @@
                     <h1>Success</h1>
                     <p>User has been created successfully</p>
                 </div>
+                <div id="error-message" class="alert alert-danger text-center d-none">
+                    <h1>Error</h1>
+                    <p>User registration failed. Please try again later.</p>
+                </div>
                 <h2 class="card-title text-center">Register</h2>
-                <form>
+                <form @submit.prevent="handleSubmit">
                     <div class="row mb-2">
                         <div class="col-md-2">
                             <label for="salutation">Salutation</label>
-                            <select class="form-control" id="salutation" name="salutation">
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Other">Other</option>
+                            <select v-model="user.salutation" class="form-control" id="salutation" name="salutation">
+                                <option value="MALE">Male</option>
+                                <option value="FEMALE">Female</option>
+                                <option value="OTHER">Other</option>
                             </select>
                         </div>
                         <div class="col-md-5">
                             <label for="firstName">First Name</label>
-                            <input type="text" class="form-control" id="firstName" placeholder="Max">
+                            <input v-model="user.firstName" type="text" class="form-control" id="firstName" placeholder="Max">
                         </div>
                         <div class="col-md-5">
                             <label for="lastName">Last Name</label>
-                            <input type="text" class="form-control" id="lastName" placeholder="Mustermann">
+                            <input v-model="user.lastName" type="text" class="form-control" id="lastName" placeholder="Mustermann">
                         </div>
                     </div>
                     <div class="mb-2">
                         <label for="email">E-Mail-Adress</label>
-                        <input type="email" class="form-control" id="email" placeholder="max.muster@gmail.com">
+                        <input v-model="user.email" type="email" class="form-control" id="email" placeholder="max.muster@gmail.com">
                     </div>
                     <div>
                         <label for="country">Country</label>
-                        <select class="form-control" id="country" name="country">
+                        <select v-model="user.country" class="form-control" id="country" name="country">
                             <option value="none">-</option>
                             <option value="AT">Austria</option>
                             <option value="BE">Belgium</option>
@@ -65,18 +69,17 @@
                     </div>
                     <div class="mb-2">
                         <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="********" minlength="8">
+                        <input v-model="user.password" type="password" class="form-control" id="password" placeholder="********" minlength="8">
                     </div>
                     <div class="mb-2">
                         <label for="confirm-password">Confirm Password</label>
-                        <input type="password" class="form-control" id="confirm-password" placeholder="********"
+                        <input v-model="confirmPassword" type="password" class="form-control" id="confirm-password" placeholder="********"
                             minlength="8">
                     </div>
                     <br>
                     <div class="mb-2 button-container justify-content-evenly">
                         <button type="submit" class="btn btn-primary card-button">Register</button>
-                        <button type="button" class="btn btn-primary card-button"
-                            onclick="location.href='login.html'">Login</button>
+                        <button type="button" class="btn btn-primary card-button" @click="goToLogin">Login</button>
                     </div>
                 </form>
             </div>
@@ -85,34 +88,78 @@
 </template>
 
 <script>
-import { registerUser } from '../services/register.js';
+import axios from 'axios';
 
 export default {
+  data() {
+    return {
+      user: {
+        salutation: 'MALE',
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        country: 'none',
+      },
+      confirmPassword: '',
+    };
+  },
   methods: {
-    registerUser() {
-      const formData = {
-        salutation: document.getElementById('salutation').value,
-        firstName: document.getElementById('firstName').value,
-        lastName: document.getElementById('lastName').value,
-        email: document.getElementById('email').value,
-        country: document.getElementById('country').value,
-        password: document.getElementById('password').value,
-        confirmPassword: document.getElementById('confirm-password').value,
-      };
+    async handleSubmit() {
+      if (this.user.password !== this.confirmPassword) {
+        document.getElementById('error-message').classList.remove('d-none');
+          setTimeout(() => {
+            document.getElementById('error-message').classList.add('d-none');
+          }, 3000);
+        
+        return;
+      }
 
-      registerUser(formData)
-        .then((response) => {
-          console.log('User registered successfully:', response.data);
+      try {
+        const formData = {
+          salutation: this.user.salutation,
+          firstName: this.user.firstName,
+          lastName: this.user.lastName,
+          email: this.user.email,
+          password: this.user.password,
+          country: this.user.country,
+          role: 'USER',
+        };
+        const response = await axios.post('http://localhost:5000/api/user/create', formData);
 
+        if (response.status === 201) {
           document.getElementById('success-message').classList.remove('d-none');
-        })
-        .catch((error) => {
-          console.error('Error registering user:', error);
-        });
-    },
+          this.user = {
+            salutation: 'MALE',
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: '',
+            country: 'none',
+          };
+          this.confirmPassword = '';
 
-    redirectToLoginPage() {
-      this.$router.push('/login');
+          setTimeout(() => {
+            document.getElementById('success-message').classList.add('d-none');
+            this.goToLogin();
+          }, 2000);
+        } else {
+          document.getElementById('error-message').classList.remove('d-none');
+          setTimeout(() => {
+            document.getElementById('error-message').classList.add('d-none');
+          }, 2000);
+        }
+
+      } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('error-message').classList.remove('d-none');
+        setTimeout(() => {
+          document.getElementById('error-message').classList.add('d-none');
+        }, 2000);
+      }
+    },
+    goToLogin() {
+        this.$router.push('/login');
     },
   },
 };
