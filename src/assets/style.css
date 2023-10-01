@@ -1,12 +1,19 @@
 /* Wohle App Settings */
 #app {
     text-align: center;
+
 }
+
+/* Color Palette */
+
+/* Main: #FC8CCA #C37EDB  #B7A6F6 #88A3E2 #AAECFC */
+/* Strong: #FA47A9 #8A2FAA #6E4BEC #2D58BC #08BAE5 */
+/* Light: #FDC6E4 #DFBBEC #DBD2FA # B7C7ED #CFF4FD */
 
 /* NavBar */
 
 .bg-light {
-    background-color: #42b983 !important;
+    background-color: #FC8CCA !important;
 }
 
 nav a {
@@ -16,7 +23,7 @@ nav a {
 }
 
 nav a.router-link-exact-active {
-    color: #2c3e50;
+    color: #6E4BEC;
 }
 
 nav a:hover {
@@ -42,11 +49,6 @@ nav a:hover {
     margin-bottom: 20px;
 }
 
-.login {
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
 .about {
     margin-top: 20px;
     margin-bottom: 20px;
@@ -57,15 +59,34 @@ nav a:hover {
 .button-container {
     display: flex;
     flex-wrap: wrap;
-    /* Wrap buttons to the next row */
     justify-content: center;
 }
 
 .action-button {
     margin-top: 40px;
-    width: 200px;
-    height: 200px;
-    background-color: #42b983;
+    width: 350px;
+    height: 250px;
+    background-color: #6E4BEC;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 30px;
+    border-radius: 10%;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.action-button:hover {
+    transform: scale(1.2);
+}
+
+/* Category Cards */
+
+.category-button {
+    margin-top: 40px;
+    width: 350px;
+    height: 250px;
+    background-color: #6E4BEC;
     border: none;
     color: white;
     font-weight: bold;
@@ -75,9 +96,63 @@ nav a:hover {
     transition: transform 0.2s;
 }
 
-.action-button:hover {
-    transform: scale(1.1);
+.category-button:hover {
+    transform: scale(1.2);
 }
+
+/* Questions & Answers */
+
+.question-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.question {
+    width: 350px;
+    height: 200px;
+    background-color: #6E4BEC;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 10%;
+}
+
+.answer-button {
+    margin-top: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 250px;
+    height: 150px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 10%;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.answer-button:hover {
+    transform: scale(1.2);
+}
+
+.answerA {
+    background-color: #dfe210;
+}
+
+.answerB {
+    background-color: #2faa62;
+}
+
+.answerC {
+    background-color: #2D58BC;
+}
+
+.answerD {
+    background-color: #e50808;
+}
+
 
 /* Login */
 
@@ -89,6 +164,11 @@ nav a:hover {
 
 .form-group label {
     font-weight: bold;
+}
+
+.loginForm {
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .registerForm {
@@ -106,8 +186,8 @@ nav a:hover {
 
 .card-button:hover {
     color: white;
-    background-color: #61a3e1;
-    border-color: #61a3e1;
+    background-color: #88A3E2;
+    border-color: #88A3E2;
 }
 
 .card-title {
@@ -124,10 +204,10 @@ nav a:hover {
 footer {
     position: relative;
     bottom: 0;
-    margin-top: 300px;
+    margin-top: 200px;
     padding-bottom: 50px;
     width: 100%;
-    background-color: #42b983;
+    background-color: #88A3E2;
 
 }
 

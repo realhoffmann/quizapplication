@@ -4,9 +4,17 @@
 
   </div>
   <div class="button-container justify-content-evenly">
-    <button class="action-button">Play</button>
-    <button class="action-button">Create Game</button>
-    <button class="action-button">Rankings</button>
+    <router-link to="/category" v-slot="{ navigate }">
+      <button @click="navigate" class="action-button">Play</button>
+    </router-link>
+  </div><br>
+  <div class="button-container justify-content-evenly">
+    <router-link to="/register" v-slot="{ navigate }">
+      <button @click="navigate" class="action-button">Create Game</button>
+    </router-link>
+    <router-link to="/register" v-slot="{ navigate }">
+      <button @click="navigate" class="action-button">Rankings</button>
+    </router-link>
   </div>
 </template>
 
