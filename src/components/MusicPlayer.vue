@@ -1,26 +1,27 @@
 <template>
-    <audio id= "track" ref="audio" autoplay loop>
+  <div>
+    <audio id="track" ref="audio" autoplay loop>
       <source :src="currentTrack" type="audio/mpeg">
     </audio>
+  </div>
 </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        currentTrack: 'https://soundimage.org/wp-content/uploads/2016/10/Arcade-Fantasy.mp3',
-      };
-    },
-    methods: {
-      playMusic(src) {
-        this.$refs.audio.src = src;
-        this.$refs.audio.play();
-      },
+
+<script>
+export default {
+  data() {
+    return {
+      currentTrack: require('@/assets/audio.mp3')
+    };
+  },
+  methods: {
+    playMusic(src) {
+      this.$refs.audio.src = src;
+      this.$refs.audio.play();
     },
     changeTrack(track) {
       this.currentTrack = track;
       this.playMusic(this.currentTrack);
     },
-  };
-  </script>
-  
+  },
+};
+</script>
