@@ -4,7 +4,7 @@
 
   </div>
   <div class="button-container justify-content-evenly">
-    <router-link to="/category" v-slot="{ navigate }">
+    <router-link to="/search-quiz" v-slot="{ navigate }">
       <button @click="navigate" class="action-button">Play</button>
     </router-link>
   </div><br>
