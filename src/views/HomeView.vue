@@ -9,10 +9,10 @@
     </router-link>
   </div><br>
   <div class="button-container justify-content-evenly">
-    <router-link to="/register" v-slot="{ navigate }">
-      <button @click="navigate" class="action-button">Create Game</button>
+    <router-link to="/create-quiz" v-slot="{ navigate }">
+      <button @click="navigate" class="action-button">Create Quiz</button>
     </router-link>
-    <router-link to="/register" v-slot="{ navigate }">
+    <router-link to="/rankings" v-slot="{ navigate }">
       <button @click="navigate" class="action-button">Rankings</button>
     </router-link>
   </div>

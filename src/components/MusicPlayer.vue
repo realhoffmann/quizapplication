@@ -10,7 +10,7 @@
 export default {
   data() {
     return {
-      currentTrack: require('@/assets/audio.mp3')
+      currentTrack: require('@/assets/sound/audio.mp3')
     };
   },
   methods: {
