@@ -15,6 +15,9 @@
             </div>
         </div>
       </div>
+      
+      <CategoryComponent />
+
       <div class="container mt-5">
     <div class="row justify-content-center">
       <div class="col-md-6">
@@ -53,27 +56,30 @@
   </template>
 
 <script>
+import CategoryComponent from "@/components/CategoryComponent.vue";
 import axios from "axios";
 
 export default {
-  data() {
-    return {
-      searchQuery: "",
-      quiz: "", 
-    };
-  },
-  methods: {
-    searchQuiz() {
-      axios
-        .get(`http://localhost:5000/api/quiz/${this.searchQuery}`)
-        .then((response) => {
-          this.quiz = response.data;
-        })
-        .catch((error) => {
-          console.error("Error fetching quiz:", error);
-        });
+    name: "SearchQuizView",
+    data() {
+        return {
+            searchQuery: "",
+            quiz: "",
+        };
     },
-  },
+    methods: {
+        searchQuiz() {
+            axios
+                .get(`http://localhost:5000/api/quiz/${this.searchQuery}`)
+                .then((response) => {
+                this.quiz = response.data;
+            })
+                .catch((error) => {
+                console.error("Error fetching quiz:", error);
+            });
+        },
+    },
+    components: { CategoryComponent }
 };
 </script>
 
