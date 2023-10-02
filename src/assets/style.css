@@ -118,6 +118,19 @@ nav a:hover {
     border-radius: 10%;
 }
 
+.question input[type="text"] {
+    width: 80%;
+    padding: 8px;
+    margin: 8px;
+    border: 1px solid white;
+    border-radius: 5px;
+    font-size: 18px;
+    background-color: #ffffff00;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+  }
+
 .answer-button {
     margin-top: 40px;
     margin-left: 20px;
@@ -136,6 +149,36 @@ nav a:hover {
 .answer-button:hover {
     transform: scale(1.2);
 }
+
+.answer-option {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 250px;
+    height: 150px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  .answer-option input[type="text"] {
+    width: 80%;
+    padding: 8px;
+    margin: 8px;
+    border: 1px solid white;
+    border-radius: 5px;
+    font-size: 18px;
+    background-color: #ffffff00;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+  }
 
 .answerA {
     background-color: #dfe210;
