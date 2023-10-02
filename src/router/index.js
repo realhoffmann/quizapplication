@@ -8,6 +8,7 @@ import QuizView from '../views/QuizView.vue'
 import CreateQuizView from '../views/CreateQuizView.vue'
 import RankingsView from '../views/RankingsView.vue'
 import CreateQuestionView from '../views/CreateQuestionView.vue'
+import SearchQuizView from '../views/SearchQuizView.vue'
 
 const routes = [
   {
@@ -54,6 +55,11 @@ const routes = [
     path: '/create-question',
     name: 'create-question',
     component: CreateQuestionView
+  },
+  {
+  path: '/search-quiz',
+  name: 'search-quiz',
+  component: SearchQuizView
   }
 ]
 
