@@ -70,7 +70,7 @@ nav a:hover {
     width: 350px;
     height: 250px;
     background-color: #42b883;
-    border: none;
+    border: 3px solid white;
     color: white;
     font-weight: bold;
     font-size: 30px;
@@ -90,7 +90,7 @@ nav a:hover {
     width: 350px;
     height: 250px;
     background-color: #42b883;
-    border: none;
+    border: 3px solid white;
     color: white;
     font-weight: bold;
     font-size: 20px;
@@ -115,7 +115,7 @@ nav a:hover {
     width: 350px;
     height: 200px;
     background-color: #42b883;
-    border: none;
+    border: 3px solid white;
     color: white;
     font-weight: bold;
     border-radius: 10%;
@@ -140,7 +140,6 @@ nav a:hover {
     margin-right: 20px;
     width: 250px;
     height: 150px;
-    border: none;
     color: white;
     font-weight: bold;
     font-size: 20px;
@@ -183,18 +182,22 @@ nav a:hover {
 
 .answerA {
     background-color: #dfe210;
+    border: 3px solid white;
 }
 
 .answerB {
     background-color: #2faa62;
+    border: 3px solid white;
 }
 
 .answerC {
     background-color: #2D58BC;
+    border: 3px solid white;
 }
 
 .answerD {
     background-color: #e50808;
+    border: 3px solid white;
 }
 
 .new-question-button {
@@ -202,8 +205,8 @@ nav a:hover {
     width: 80px;
     height: 80px;
     border: none;
-    background-color: #ffffff;
-    color: black;
+    background-color: #ffffff00;
+    color: white;
     font-weight: bold;
     font-size: 50px;
     border-radius: 10%;
