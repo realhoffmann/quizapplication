@@ -13,7 +13,7 @@
 /* NavBar */
 
 .bg-light {
-    background-color: #FC8CCA !important;
+    background-color: black !important;
 }
 
 nav a {
@@ -129,7 +129,7 @@ nav a:hover {
     color: white;
     font-weight: bold;
     text-align: center;
-  }
+}
 
 .answer-button {
     margin-top: 40px;
@@ -152,11 +152,9 @@ nav a:hover {
 
 .answer-option {
     display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    margin-top: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
     width: 250px;
     height: 150px;
     border: none;
@@ -165,9 +163,9 @@ nav a:hover {
     font-size: 18px;
     border-radius: 10px;
     text-align: center;
-  }
-  
-  .answer-option input[type="text"] {
+}
+
+.answer-option input[type="text"] {
     width: 80%;
     padding: 8px;
     margin: 8px;
@@ -178,7 +176,7 @@ nav a:hover {
     color: white;
     font-weight: bold;
     text-align: center;
-  }
+}
 
 .answerA {
     background-color: #dfe210;
@@ -194,6 +192,24 @@ nav a:hover {
 
 .answerD {
     background-color: #e50808;
+}
+
+.new-question-button {
+    text-align: center;
+    width: 80px;
+    height: 80px;
+    border: none;
+    background-color: #ffffff;
+    color: black;
+    font-weight: bold;
+    font-size: 50px;
+    border-radius: 10%;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.new-question-button:hover {
+    transform: scale(1.2);
 }
 
 

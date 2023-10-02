@@ -1,20 +1,36 @@
 <template>
-<div class="home">
-    <h1>Create Question & Answers</h1>
-</div>
-<div class="question-container">
-        <div class="question">
-            <h1>Question</h1><br>
-            <input type="text" id="question" name="question" placeholder="Question"><br>
-        </div>
-    </div><br>
-
-    <div class="button-container justify-content-center">
-            <div class="answer-option answerA"><input type="text" id="answerA" name="answerA" placeholder="Answer a)"></div>
-            <div class="answer-option answerB"><input type="text" id="answerB" name="answerB" placeholder="Answer b)"></div>
+    <div class="home">
+        <h1>Create Question & Answers</h1>
     </div>
-    <div class="button-container justify-content-center">
-        <div class="answer-option answerC"><input type="text" id="answerC" name="answerC" placeholder="Answer c)"></div>
-            <div class="answer-option answerD"><input type="text" id="answerD" name="answerD" placeholder="Answer d)"></div>
+    <div>
+        <div v-for="index in questionComponentsCount" :key="index">
+            <CreateQuestionComponent />
+        </div>
+        <button class="new-question-button" @click="addQuestion">+</button>
+        <div class="container">
+            <router-view></router-view>
+        </div>
     </div>
 </template>
+  
+<script>
+import CreateQuestionComponent from "@/components/CreateQuestionComponent.vue";
+
+export default {
+    components: {
+        CreateQuestionComponent,
+    },
+    data() {
+        return {
+            questionComponentsCount: 1,
+
+        };
+    },
+    methods: {
+        addQuestion() {
+            this.questionComponentsCount++;
+        },
+    },
+};
+</script>
+  
