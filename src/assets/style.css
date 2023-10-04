@@ -284,7 +284,7 @@ footer ul {
 }
 
 footer ul li {
-    font-weight: 350;
+    font-weight: bold;
     list-style: none;
     display: inline;
     margin: 2%;
