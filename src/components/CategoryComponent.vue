@@ -4,7 +4,7 @@
     </div>
     <div class="button-container justify-content-evenly">
         <router-link :to="pathTo" v-slot="{ navigate }">
-            <ButtonAtom action="navigate" class="category-button" description="Sports" />
+            <button @click="navigate" class="category-button">Sports</button>
         </router-link>
         <router-link :to="pathTo" v-slot="{ navigate }">
             <button @click="navigate" class="category-button">Geography</button>
@@ -29,20 +29,13 @@
 </template>
 
 <script>
-import { Button } from 'bootstrap';
-import ButtonAtom from "@/components/atoms/ButtonAtom.vue";
-
 export default {
     name: "CategoryComponent",
-    components: {
-        ButtonAtom,
-    },
     props: {
         pathTo: {
             type: String,
             default: "/quiz",
         },
-    },
-    components: { Button }
+    }
 };
 </script>
