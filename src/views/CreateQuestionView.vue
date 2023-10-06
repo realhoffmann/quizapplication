@@ -14,7 +14,7 @@
 </template>
   
 <script>
-import CreateQuestionComponent from "@/components/CreateQuestionComponent.vue";
+import CreateQuestionComponent from "@/components/organisms/QuestionFormOrganism.vue";
 
 export default {
     components: {
