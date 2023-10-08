@@ -37,8 +37,9 @@ const routes = [
     component: CategoryView
   },
   {
-    path: '/quiz',
+    path: '/quiz/:requestId', 
     name: 'quiz',
+    props: true,
     component: QuizView
   },
   {

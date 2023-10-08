@@ -6,20 +6,12 @@
         </div>
     </div><br>
     <div class="button-container justify-content-center">
-        <router-link to="/" v-slot="{ navigate }">
-            <button @click="navigate" class="answer-button answerA"> {{ answerA }}</button>
-        </router-link>
-        <router-link to="/" v-slot="{ navigate }">
-            <button @click="navigate" class="answer-button answerB">{{ answerB }}</button>
-        </router-link>
+        <button class="answer-button answerA"> {{ answerA }}</button>
+        <button class="answer-button answerB">{{ answerB }}</button>
     </div>
     <div class="button-container justify-content-center">
-        <router-link to="/" v-slot="{ navigate }">
-            <button @click="navigate" class="answer-button answerC">{{ answerC }}</button>
-        </router-link>
-        <router-link to="/" v-slot="{ navigate }">
-            <button @click="navigate" class="answer-button answerD">{{ answerD }}</button>
-        </router-link>
+        <button class="answer-button answerC">{{ answerC }}</button>
+        <button class="answer-button answerD">{{ answerD }}</button>
     </div>
 </template>
 
