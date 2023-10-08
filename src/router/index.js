@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import AboutView from '../views/AboutView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
+import CategoryView from '../views/CategoryView.vue'
 import QuizView from '../views/QuizView.vue'
 import CreateQuizView from '../views/CreateQuizView.vue'
 import RankingsView from '../views/RankingsView.vue'
@@ -31,6 +32,11 @@ const routes = [
     component: RegisterView
   },
   {
+    path: '/category',
+    name: 'category',
+    component: CategoryView
+  },
+  {
     path: '/quiz',
     name: 'quiz',
     component: QuizView
@@ -51,9 +57,9 @@ const routes = [
     component: CreateQuestionView
   },
   {
-    path: '/search-quiz',
-    name: 'search-quiz',
-    component: SearchQuizView
+  path: '/search-quiz',
+  name: 'search-quiz',
+  component: SearchQuizView
   }
 ]
 

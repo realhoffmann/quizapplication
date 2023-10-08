@@ -7,17 +7,9 @@
             <li> <router-link to="/">Contact</router-link> </li>
             <p></p>
             <p>Copyright &copy; QuizApp GmbH</p>
-            <Logo />
+            <li> <router-link to="/">
+                    <a class="navbar-brand" href="#"><img src="../assets/logo.png" width="60" height="60">
+                    </a></router-link> </li>
         </ul>
     </footer>
 </template>
-
-<script>
-import Logo from '../atoms/LogoAtom.vue';
-
-export default {
-    components: {
-        Logo,
-    },
-};
-</script>

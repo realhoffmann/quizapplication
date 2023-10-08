@@ -2,15 +2,15 @@
     <div class="home">
         <h1>Create Quiz!</h1>
     </div>
-    <CategoryComponentCreateQuestion />
+    <CategoryComponent pathTo="/create-question"/>
 </template>
 
 <script>
-import CategoryComponentCreateQuestion from "@/components/organisms/CategoryComponentCreateQuestionOrganism.vue";
+import CategoryComponent from '@/components/CategoryComponent.vue';
 
 export default {
     components: {
-        CategoryComponentCreateQuestion,
+        CategoryComponent
     },
 };
 </script>
