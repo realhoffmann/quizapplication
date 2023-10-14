@@ -9,6 +9,7 @@ import CreateQuizView from '../views/CreateQuizView.vue'
 import RankingsView from '../views/RankingsView.vue'
 import CreateQuestionView from '../views/CreateQuestionView.vue'
 import SearchQuizView from '../views/SearchQuizView.vue'
+import LobbyView from "../views/LobbyView.vue";
 
 const routes = [
   {
@@ -61,7 +62,13 @@ const routes = [
   path: '/search-quiz',
   name: 'search-quiz',
   component: SearchQuizView
-  }
+  },
+  {
+    path: '/lobby/:quizIds',
+    name: 'lobby',
+    component: LobbyView,
+    props: true,
+  },
 ]
 
 const router = createRouter({

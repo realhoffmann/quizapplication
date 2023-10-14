@@ -4,19 +4,19 @@
   </div>
   <div>
     <div class="container">
-      <div class="text-center mt-2">
-          <h2 v-if="timer > 0">Time left: {{ timer }} seconds</h2>
-          <p v-else>Time's up!</p>
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" :style="{ width: timer * 6.6666666667 + '%' }" aria-valuenow="25"
+          aria-valuemin="0" aria-valuemax="100">
+          {{ timer }}
         </div>
+      </div>
       <div v-if="quizData !== null">
         <div :key="currentQuestion.id">
-          <QuestionComponent
-            :question="currentQuestion.question"
+          <QuestionComponent :question="currentQuestion.question"
             :answerA="currentQuestion.answerOptions[0] == null ? '' : currentQuestion.answerOptions[0].answer.answer"
             :answerB="currentQuestion.answerOptions[1] == null ? '' : currentQuestion.answerOptions[1].answer.answer"
             :answerC="currentQuestion.answerOptions[2] == null ? '' : currentQuestion.answerOptions[2].answer.answer"
-            :answerD="currentQuestion.answerOptions[3] == null ? '' : currentQuestion.answerOptions[3].answer.answer"
-          />
+            :answerD="currentQuestion.answerOptions[3] == null ? '' : currentQuestion.answerOptions[3].answer.answer" />
         </div>
         <br>
         <button class="btn btn-primary" @click="nextQuestion">Next</button>
@@ -50,7 +50,7 @@ export default {
   methods: {
     searchQuiz(quizId) {
       axios
-        .get(`http://localhost:5000/api/quizzes/${quizId}`)
+        .get(`http://localhost:8081/api/quizzes/${quizId}`)
         .then((response) => {
           this.quizData = response.data;
           this.startTimer();
