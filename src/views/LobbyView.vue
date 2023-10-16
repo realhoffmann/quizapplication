@@ -3,12 +3,10 @@
     <h1>Quiz Lobby</h1>
     <div class="button-container">
       <div class="row justify-content-evenly">
-        <div v-for="quizId in quizIdsArray" :key="quizId" class="col-6">
-          <button
-              class="quiz-button" @click="startQuiz(quizId)"
-              :class="{ 'expired': isQuizExpired(quizId) }"
-              :style="getButtonStyle(quizStartDates[quizId])"
-              :disabled="isQuizExpired(quizId) || quizStartDates[quizId] === 'Loading...'">
+        <div v-for="quizId in quizIdsArray" :key="quizId">
+          <button class="quiz-button" @click="startQuiz(quizId)" :class="{ 'expired': isQuizExpired(quizId) }"
+            :style="getButtonStyle(quizStartDates[quizId])"
+            :disabled="isQuizExpired(quizId) || quizStartDates[quizId] === 'Loading...'">
             {{ quizId }}
             <br>
             {{ getFormatedStartDate(quizStartDates[quizId]) }}
@@ -46,7 +44,7 @@ export default {
       for (const quizId of this.quizIdsArray) {
         try {
           const response = await EndpointService.get(`api/quizzes/${quizId}`);
-          this.quizStartDates[quizId] = calculateQuizAvailability(response.data.startDate);
+          this.quizStartDates[quizId] = calculateQuizAvailability(response.data.startDate, response.data.duration);
         } catch (error) {
           this.quizStartDates[quizId] = "Availability could not be loaded.";
         }
@@ -76,11 +74,11 @@ export default {
       const redColor = '#ff4d4d';
       const lightGrayColor = 'rgba(0,0,0,0)';
 
-      if(progress < 20){
+      if (progress < 20) {
         return {
           background: `linear-gradient(to right, ${redColor} ${progress}%, ${lightGrayColor} ${progress}%)`,
         };
-      }else {
+      } else {
         return {
           background: `linear-gradient(to right, ${greenColor} ${progress}%, ${lightGrayColor} ${progress}%)`,
         };
@@ -91,13 +89,13 @@ export default {
         return '';
       }
 
-      if(startDate === "Loading..." || startDate === "Quiz expired") {
+      if (startDate === "Loading..." || startDate === "Quiz expired") {
         return startDate;
       }
 
       const [days, hours] = startDate.split('/');
 
-      if(days === '0') {
+      if (days === '0') {
         return `${hours} hours`;
       } else {
         return `${days} days ${hours} hours`;

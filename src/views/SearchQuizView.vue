@@ -36,42 +36,42 @@ export default {
   methods: {
     searchQuiz() {
       EndpointService.get(`quizzes/${this.searchQuery}`)
-          .then((response) => {
-            if (response.status === 200) {
-              this.quiz = response.data;
-              console.log(this.quiz);
+        .then((response) => {
+          if (response.status === 200) {
+            this.quiz = response.data;
+            console.log(this.quiz);
 
-              this.$router.push({
-                name: "lobby",
-                params: { quizIds: this.quiz.id },
-              });
-            } else {
-              handleError("Quiz does not exist.");
-            }
-          })
-          .catch((error) => {
-            console.error("Error while fetching quiz:", error);
-            handleError("An error occurred while fetching the quiz.");
-          });
+            this.$router.push({
+              name: "lobby",
+              params: { quizIds: this.quiz.id },
+            });
+          } else {
+            handleError("Quiz does not exist.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error while fetching quiz:", error);
+          handleError("An error occurred while fetching the quiz.");
+        });
     },
     handleCategoryClicked(category) {
       EndpointService.get(`quizzes/categories/${category.toUpperCase()}`)
-          .then((response) => {
-            if (response.data.length === 0) {
-              // This is the case when no quizzes were found for the category
-              handleError("No quizzes found for this category.");
-            } else {
-              const quizIds = response.data.map((quiz) => quiz.id).join(",");
-              this.$router.push({
-                name: "lobby",
-                params: { quizIds },
-              });
-            }
-          })
-          .catch((error) => {
-            console.error("Error while fetching quizzes by category:", error);
-            handleError("An error occurred while fetching quizzes by category.");
-          });
+        .then((response) => {
+          if (response.data.length === 0) {
+            // This is the case when no quizzes were found for the category
+            handleError("No quizzes found for this category.");
+          } else {
+            const quizIds = response.data.map((quiz) => quiz.id).join(",");
+            this.$router.push({
+              name: "lobby",
+              params: { quizIds },
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("Error while fetching quizzes by category:", error);
+          handleError("An error occurred while fetching quizzes by category.");
+        });
     },
   },
   components: { CategoryComponent },

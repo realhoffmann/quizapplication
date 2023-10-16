@@ -89,7 +89,7 @@
 
 <script>
 
-import {handleError, handleSuccess} from "@/services/MessageHandlerService";
+import { handleError, handleSuccess } from "@/services/MessageHandlerService";
 import EndpointService from "@/services/EndpointService";
 
 export default {
@@ -124,7 +124,7 @@ export default {
           role: 'USER',
         };
 
-        const response = await EndpointService.post("users/create", formData);
+        const response = await EndpointService.post("users/createUser", formData);
 
         if (response.status === 201) {
           handleError("User has been created successfully");
