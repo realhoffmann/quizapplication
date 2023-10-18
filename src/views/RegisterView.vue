@@ -106,8 +106,13 @@ export default {
   },
   methods: {
     async handleSubmit() {
-      await registerUser(this.user, this.confirmPassword, this.$router);
-
+      await registerUser(this.user, this.confirmPassword, this.$router).then((result) => {
+        if (result) {
+          this.goToLogin();
+        }
+      });
+    },
+    goToLogin() {
       setTimeout(() => {
         this.$router.push({
           name: "login",

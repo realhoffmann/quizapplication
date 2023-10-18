@@ -9,7 +9,7 @@ export async function registerUser(user, confirmPassword) {
         if (user.password !== confirmPassword) {
             console.error("Passwords do not match, password: " + user.password + ", confirmPassword: " + user.confirmPassword + ".");
             handleError("Passwords do not match", 'error-message');
-            return;
+            return false;
         }
 
         const formData = {
@@ -35,11 +35,19 @@ export async function registerUser(user, confirmPassword) {
 
             handleSuccess("User has been created successfully");
             console.info("User has been created successfully")
+            return true;
         } else {
             handleError("User registration failed. Please try again later.");
         }
+        return false;
     } catch (error) {
+        if(error.response.status === 500) {
+            handleError("Email already exists. Please try with another email.");
+            return false;
+        }
+
         console.error('Error:', error);
         handleError("An error occurred. Please try again later.");
+        return false;
     }
 }
