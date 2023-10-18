@@ -23,7 +23,7 @@
 <script>
 import CategoryComponent from "@/components/CategoryComponent.vue";
 import { handleError } from "@/services/MessageHandlerService";
-import EndpointService from "@/services/EndpointService"; // Import the error handling function
+import EndpointService from "@/services/server/EndpointService"; // Import the error handling function
 
 export default {
   name: "SearchQuizView",

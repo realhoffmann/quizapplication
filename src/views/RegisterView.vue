@@ -88,9 +88,7 @@
 </template>
 
 <script>
-
-import { handleError, handleSuccess } from "@/services/MessageHandlerService";
-import EndpointService from "@/services/EndpointService";
+import { registerUser } from "@/services/user/UserRegisterService";
 
 export default {
   data() {
@@ -108,51 +106,13 @@ export default {
   },
   methods: {
     async handleSubmit() {
-      if (this.user.password !== this.confirmPassword) {
-        handleError("Passwords do not match", 'error-message');
-        return;
-      }
+      await registerUser(this.user, this.confirmPassword, this.$router);
 
-      try {
-        const formData = {
-          salutation: this.user.salutation,
-          firstName: this.user.firstName,
-          lastName: this.user.lastName,
-          email: this.user.email,
-          password: this.user.password,
-          country: this.user.country,
-          role: 'USER',
-        };
-
-        const response = await EndpointService.post("users/createUser", formData);
-
-        if (response.status === 201) {
-          handleError("User has been created successfully");
-          this.user = {
-            salutation: 'MALE',
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: '',
-            country: 'none',
-          };
-          this.confirmPassword = '';
-
-          setTimeout(() => {
-            handleSuccess("User has been created successfully");
-            this.goToLogin();
-          }, 2000);
-        } else {
-          handleError("User registration failed. Please try again later.");
-        }
-
-      } catch (error) {
-        console.error('Error:', error);
-        handleError("An error occurred. Please try again later.");
-      }
-    },
-    goToLogin() {
-      this.$router.push('/login');
+      setTimeout(() => {
+        this.$router.push({
+          name: "login",
+        });
+      }, 3000);
     },
   },
 };

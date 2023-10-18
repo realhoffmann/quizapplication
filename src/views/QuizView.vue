@@ -34,7 +34,7 @@
 
 <script>
 import QuestionComponent from "@/components/QuestionComponent.vue";
-import EndpointService from "@/services/EndpointService";
+import EndpointService from "@/services/server/EndpointService";
 
 export default {
   name: "QuizView",

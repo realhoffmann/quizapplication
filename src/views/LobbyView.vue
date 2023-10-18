@@ -5,11 +5,11 @@
       <div class="row justify-content-evenly">
         <div v-for="quizId in quizIdsArray" :key="quizId">
           <button class="quiz-button" @click="startQuiz(quizId)" :class="{ 'expired': isQuizExpired(quizId) }"
-            :style="getButtonStyle(quizStartDates[quizId])"
-            :disabled="isQuizExpired(quizId) || quizStartDates[quizId] === 'Loading...'">
+                  :style="getButtonStyle(quizStartDates[quizId])"
+                  :disabled="isQuizExpired(quizId) || quizStartDates[quizId] === 'Loading...'">
             {{ quizId }}
             <br>
-            {{ getFormatedStartDate(quizStartDates[quizId]) }}
+            {{ getFormattedStartDate(quizStartDates[quizId]) }}
           </button>
         </div>
       </div>
@@ -21,8 +21,7 @@
 </template>
 
 <script>
-import { calculateQuizAvailability } from "@/services/QuizAvailabilityService";
-import EndpointService from "@/services/EndpointService";
+import { loadQuizStartDates, isQuizExpired, startQuiz, getButtonStyle, getFormattedStartDate } from "@/services/quiz/QuizLobbyService";
 
 export default {
   name: "LobbyView",
@@ -41,66 +40,28 @@ export default {
   },
   methods: {
     async loadQuizStartDates() {
-      for (const quizId of this.quizIdsArray) {
-        try {
-          const response = await EndpointService.get(`quizzes/${quizId}`);
-          console.log("Response: ", response.data);
-          this.quizStartDates[quizId] = calculateQuizAvailability(response.data.startDate, response.data.duration);
-        } catch (error) {
-          this.quizStartDates[quizId] = "Availability could not be loaded.";
-        }
-      }
+      this.quizStartDates = loadQuizStartDates(this.quizIdsArray).then((result) => {
+        this.quizStartDates = result;
+      }).catch((error) => {
+        console.log(error);
+      });
     },
+
     isQuizExpired(quizId) {
-      return this.quizStartDates[quizId] === "Quiz expired";
+      return isQuizExpired(this.quizStartDates, quizId);
     },
+
     startQuiz(quizId) {
-      if (!this.isQuizExpired(quizId)) {
-        this.$router.push({
-          name: "quiz",
-          params: { requestId: quizId },
-        });
-      }
+      startQuiz(this.$router, this.isQuizExpired, quizId);
     },
+
     getButtonStyle(startDate) {
-      if (!startDate || startDate === "Loading...") {
-        return {};
-      }
-      const [days, hours] = startDate.split('/');
-      const totalHours = parseInt(days) * 24 + parseInt(hours);
-      const progress = Math.round((totalHours / 168) * 100);
-
-      // ohne Transparenz ist besser, sonst ist schwierig zu lesen
-      const greenColor = '#42b883';
-      const redColor = '#ff4d4d';
-      const lightGrayColor = 'rgba(0,0,0,0)';
-
-      if (progress < 20) {
-        return {
-          background: `linear-gradient(to right, ${redColor} ${progress}%, ${lightGrayColor} ${progress}%)`,
-        };
-      } else {
-        return {
-          background: `linear-gradient(to right, ${greenColor} ${progress}%, ${lightGrayColor} ${progress}%)`,
-        };
-      }
+      return getButtonStyle(startDate);
     },
-    getFormatedStartDate(startDate) {
-      if (!startDate) {
-        return '';
-      }
 
-      if (startDate === "Loading..." || startDate === "Quiz expired") {
-        return startDate;
-      }
-
-      const [days, hours] = startDate.split('/');
-
-      if (days === '0') {
-        return `${hours} hours`;
-      } else {
-        return `${days} days ${hours} hours`;
-      }
+    getFormattedStartDate(startDate) {
+      console.log("getFormattedStartDate: " + startDate);
+      return getFormattedStartDate(startDate);
     },
   },
 };
