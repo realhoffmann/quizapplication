@@ -43,7 +43,8 @@ export default {
     async loadQuizStartDates() {
       for (const quizId of this.quizIdsArray) {
         try {
-          const response = await EndpointService.get(`api/quizzes/${quizId}`);
+          const response = await EndpointService.get(`quizzes/${quizId}`);
+          console.log("Response: ", response.data);
           this.quizStartDates[quizId] = calculateQuizAvailability(response.data.startDate, response.data.duration);
         } catch (error) {
           this.quizStartDates[quizId] = "Availability could not be loaded.";
