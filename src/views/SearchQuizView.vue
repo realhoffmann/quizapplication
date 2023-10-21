@@ -2,10 +2,6 @@
   <div class="container mt-5">
     <div class="row justify-content-center">
       <div class="col-md-6">
-        <div id="error-message" class="alert alert-danger text-center d-none">
-          <h1>Error</h1>
-          <p>Quiz does not exist.</p>
-        </div>
         <div class="input-group mb-3">
           <input type="text" class="form-control" placeholder="Search for a quiz" v-model="searchQuery" />
         </div>
