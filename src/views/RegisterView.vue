@@ -16,11 +16,11 @@
             </div>
             <div class="col-md-5">
               <label for="firstName">First Name</label>
-              <input v-model="user.firstName" type="text" class="form-control" id="firstName" placeholder="Max">
+              <input v-model="user.firstName" type="text" class="form-control" id="firstName" placeholder="Max" required>
             </div>
             <div class="col-md-5">
               <label for="lastName">Last Name</label>
-              <input v-model="user.lastName" type="text" class="form-control" id="lastName" placeholder="Mustermann">
+              <input v-model="user.lastName" type="text" class="form-control" id="lastName" placeholder="Mustermann" required>
             </div>
           </div>
           <div class="mb-2">
