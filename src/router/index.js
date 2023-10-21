@@ -10,6 +10,11 @@ import RankingsView from '../views/RankingsView.vue'
 import CreateQuestionView from '../views/CreateQuestionView.vue'
 import SearchQuizView from '../views/SearchQuizView.vue'
 import LobbyView from "../views/LobbyView.vue";
+import PrivacyView from '../views/PrivacyView.vue'
+import FaqView from '../views/FaqView.vue'
+import ImprintView from '../views/ImprintView.vue'
+import ContactView from '../views/ContactView.vue'
+
 
 const routes = [
   {
@@ -70,6 +75,26 @@ const routes = [
     component: LobbyView,
     props: true,
   },
+  {
+    path: '/privacy',
+    name: 'privacy',
+    component: PrivacyView
+  },
+  {
+    path: '/faq',
+    name: 'faq',
+    component: FaqView
+  },
+  {
+    path: '/imprint',
+    name: 'imprint',
+    component: ImprintView
+  },
+  {
+    path: '/contact',
+    name: 'contact',
+    component: ContactView
+  }
 ]
 
 const router = createRouter({

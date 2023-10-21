@@ -2,14 +2,6 @@
   <div class="d-flex justify-content-center">
     <div class="card registerForm login-card">
       <div class="card-body">
-        <div id="success-message" class="alert alert-success text-center d-none">
-          <h1>Success</h1>
-          <p>User has been created successfully</p>
-        </div>
-        <div id="error-message" class="alert alert-danger text-center d-none">
-          <h1>Error</h1>
-          <p>User registration failed. Please try again later.</p>
-        </div>
         <h2 class="card-title text-center">Register</h2>
         <form @submit.prevent="handleSubmit">
           <div class="row mb-2">

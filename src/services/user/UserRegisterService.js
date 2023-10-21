@@ -8,7 +8,7 @@ export async function registerUser(user, confirmPassword) {
     try {
         if (user.password !== confirmPassword) {
             console.error("Passwords do not match, password: " + user.password + ", confirmPassword: " + user.confirmPassword + ".");
-            handleError("Passwords do not match", 'error-message');
+            handleError("Passwords do not match");
             return false;
         }
 

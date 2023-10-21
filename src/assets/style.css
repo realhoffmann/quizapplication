@@ -326,3 +326,17 @@ footer ul li a:hover {
 .progress {
     margin-bottom: 2%;
 }
+
+/* Imprint, FAQ, Privacy */
+.faq {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.privacy {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 20px;
+    text-align: left;
+
+}
