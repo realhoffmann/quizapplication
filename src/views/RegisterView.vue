@@ -8,6 +8,7 @@
             <div class="col-md-2">
               <label for="salutation">Salutation</label>
               <select v-model="user.salutation" class="form-control" id="salutation" name="salutation">
+                <option value="none">-</option>
                 <option value="MALE">Male</option>
                 <option value="FEMALE">Female</option>
                 <option value="OTHER">Other</option>
@@ -24,7 +25,8 @@
           </div>
           <div class="mb-2">
             <label for="email">E-Mail-Adress</label>
-            <input v-model="user.email" type="email" class="form-control" id="email" placeholder="max.muster@gmail.com" required>
+            <input v-model="user.email" type="email" class="form-control" id="email" placeholder="max.muster@gmail.com"
+              required>
           </div>
           <div>
             <label for="country">Country</label>
@@ -86,7 +88,7 @@ export default {
   data() {
     return {
       user: {
-        salutation: 'MALE',
+        salutation: 'none',
         firstName: '',
         lastName: '',
         email: '',
