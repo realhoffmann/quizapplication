@@ -44,6 +44,7 @@ export default {
       currentQuestionIndex: 0,
       timer: 15,
       points: 0,
+      playing: true,
       timerInterval: null,
     };
   },
@@ -65,11 +66,10 @@ export default {
         });
     },
     nextQuestion() {
-      this.points = this.points + this.timer * 10;
       if (this.currentQuestionIndex < this.quizData.questions.length - 1) {
         this.currentQuestionIndex++;
         this.resetTimer();
-      } else if (this.points > 0){
+      } else if (this.playing) {
         this.$router.push({
           name: "rankings",
           query: { requestId: this.requestId, points: this.points },
@@ -78,6 +78,7 @@ export default {
 
         //reset points
         this.points = 0;
+        this.playing = false;
       }
     },
     startTimer() {
@@ -99,10 +100,12 @@ export default {
       console.log(answerInfo);
       if (answerInfo.isCorrect) {
         console.log("Correct answer!");
-        this.points = this.points + 150;
+        this.points = this.points + 150 + (this.timer * 10);
         this.nextQuestion();
       } else {
         console.log("Wrong answer!");
+        this.points = this.points - (this.timer * 5) < 0 ? 0 : this.points - (this.timer * 5);
+
         this.nextQuestion();
       }
     },
@@ -118,6 +121,8 @@ export default {
   },
   mounted() {
     console.log(this.requestId);
+    // we need to set playing to true, to make sure that play mechanism is working only from entrance and after the game is finished
+    this.playing = true;
     this.searchQuiz(this.requestId);
   },
 };
