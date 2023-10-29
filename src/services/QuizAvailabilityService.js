@@ -1,6 +1,7 @@
 /**
  * Berechnet die verbleibende Zeit bis zum Ablauf des Quizzes
  * @param startDate - Startdatum des Quizzes
+ * @param duration
  * @returns {string} - Verbleibende Zeit bis zum Ablauf des Quizzes in Tagen/Stunden
  */
 export const calculateQuizAvailability = (startDate, duration) => {

@@ -6,7 +6,6 @@
     <div v-for="index in questionComponentsCount" :key="index">
       <CreateQuestionComponent ref="questionComponents" />
     </div>
-    <p>{{ getCategory }}</p>
     <button class="new-question-button" @click="addQuestion">Add Question</button>
     <button class="new-question-button" @click="submit">Submit Quiz</button>
     <div class="container">
@@ -19,7 +18,7 @@
 import CreateQuestionComponent from "@/components/CreateQuestionComponent.vue";
 import { useAppStore } from "@/services/store/appStore";
 import EndpointService from "@/services/server/EndpointService";
-import {handleError} from "@/services/MessageHandlerService";
+import {handleError, handleSuccess} from "@/services/MessageHandlerService";
 
 export default {
   components: {
@@ -43,8 +42,8 @@ export default {
         return;
       }
 
-      if(this.$refs.questionComponents.some((component) => component.getQuestionFromForm().answerOptions.every(answer => answer.correct === false))) {
-        handleError("Please select at least one correct answer");
+      if(this.$refs.questionComponents.some((component) => component.getQuestionFromForm().answerOptions.filter(answer => answer.correct === true).length !== 1)) {
+        handleError("Please select one correct answer");
         return;
       }
 
@@ -72,8 +71,8 @@ export default {
         return;
       }
 
-      if(formQuiz.questions.some(question => question.answerOptions.every(answer => answer.correct === false))) {
-        handleError("Please select at least one correct answer");
+      if(this.$refs.questionComponents.some((component) => component.getQuestionFromForm().answerOptions.filter(answer => answer.correct === true).length !== 1)) {
+        handleError("Please select one correct answer");
         return;
       }
 
@@ -82,10 +81,22 @@ export default {
       EndpointService.post("quizzes/createQuiz", formQuiz)
         .then((response) => {
           console.log(response);
+          if(response.status === 201) {
+            handleSuccess("Quiz created successfully");
+            const quizId = response.data.id;
+              this.$router.push({
+                name: "lobby",
+                params: { quizIds: quizId },
+              });
+          }
+          else {
+            handleError("Something went wrong");
+          }
         })
         .catch((error) => {
           console.log(error);
         });
+
     },
   },
   computed: {
