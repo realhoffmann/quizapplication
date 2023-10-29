@@ -4,7 +4,7 @@
   </div>
   <div>
     <div v-for="index in questionComponentsCount" :key="index">
-      <CreateQuestionComponent ref="questionComponents" />
+      <CreateQuestionMolecule ref="questionComponents" />
     </div>
     <button class="new-question-button" @click="addQuestion">Add Question</button>
     <button class="new-question-button" @click="submit">Submit Quiz</button>
@@ -15,14 +15,14 @@
 </template>
 
 <script>
-import CreateQuestionComponent from "@/components/CreateQuestionComponent.vue";
+import CreateQuestionMolecule from "@/components/molecules/CreateQuestionMolecule.vue";
 import { useAppStore } from "@/services/store/appStore";
 import EndpointService from "@/services/server/EndpointService";
 import {handleError, handleSuccess} from "@/services/MessageHandlerService";
 
 export default {
   components: {
-    CreateQuestionComponent,
+    CreateQuestionMolecule,
   },
   data() {
     return {
