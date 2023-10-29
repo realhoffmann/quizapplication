@@ -25,6 +25,7 @@
 <script>
 import QuestionComponent from "@/components/QuestionComponent.vue";
 import EndpointService from "@/services/server/EndpointService";
+import {useAppStore} from "@/services/store/appStore";
 
 export default {
   name: "QuizView",
@@ -66,9 +67,14 @@ export default {
         const quizEndTime = Date.now();
         const quizDuration = (quizEndTime - this.quizStartTime) / 1000;
 
+        const store = useAppStore();
+
+        store.setQuizDuration(quizDuration);
+        store.setPoints(this.points);
+        store.setRequestId(this.requestId);
+
         this.$router.push({
           name: "rankings",
-          query: { requestId: this.requestId, points: this.points, duration: quizDuration },
         });
         console.log("End of quiz reached. Redirecting to rankings. (points: " + this.points + ")" + " (requestId: " + this.requestId + "))");
 
