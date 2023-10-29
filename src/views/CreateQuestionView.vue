@@ -19,6 +19,7 @@
 import CreateQuestionComponent from "@/components/CreateQuestionComponent.vue";
 import { useAppStore } from "@/services/store/appStore";
 import EndpointService from "@/services/server/EndpointService";
+import {handleError} from "@/services/MessageHandlerService";
 
 export default {
   components: {
@@ -32,6 +33,21 @@ export default {
   },
   methods: {
     addQuestion() {
+      if(this.$refs.questionComponents.some((component) => component.getQuestionFromForm().question === "")) {
+        handleError("Please fill in all questions");
+        return;
+      }
+
+      if(this.$refs.questionComponents.some((component) => component.getQuestionFromForm().answerOptions.some(answer => answer.answer === ""))) {
+        handleError("Please fill in all answers");
+        return;
+      }
+
+      if(this.$refs.questionComponents.some((component) => component.getQuestionFromForm().answerOptions.every(answer => answer.correct === false))) {
+        handleError("Please select at least one correct answer");
+        return;
+      }
+
       this.questionComponentsCount++;
     },
     submit() {
@@ -45,6 +61,21 @@ export default {
         duration: 30,
         questions: this.quizQuestions,
       };
+
+      if(formQuiz.questions.some(question => question.question === "")) {
+        handleError("Please fill in all questions");
+        return;
+      }
+
+      if(formQuiz.questions.some(question => question.answerOptions.some(answer => answer.answer === ""))) {
+        handleError("Please fill in all answers");
+        return;
+      }
+
+      if(formQuiz.questions.some(question => question.answerOptions.every(answer => answer.correct === false))) {
+        handleError("Please select at least one correct answer");
+        return;
+      }
 
       console.log(JSON.stringify(formQuiz));
 
