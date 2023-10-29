@@ -25,7 +25,7 @@
 <script>
 import QuestionComponent from "@/components/QuestionComponent.vue";
 import EndpointService from "@/services/server/EndpointService";
-import {useAppStore} from "@/services/store/appStore";
+import { useAppStore } from "@/services/store/appStore";
 
 export default {
   name: "QuizView",
@@ -72,6 +72,7 @@ export default {
         store.setQuizDuration(quizDuration);
         store.setPoints(this.points);
         store.setRequestId(this.requestId);
+        store.setSelectedCategory(this.quizData.category);
 
         this.$router.push({
           name: "rankings",

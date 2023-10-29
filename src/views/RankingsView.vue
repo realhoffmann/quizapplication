@@ -6,6 +6,7 @@
           <div class="ms-2 me-auto">
             <div class="fw-bold">Quiz ID: {{ dataFromStore.requestId }}</div>
             <div class="fw-bold">Duration: {{ dataFromStore.duration }}s</div>
+            <div class="fw-bold">Category: {{ dataFromStore.category }}</div>
           </div>
           <div class="d-flex flex-column align-items-center">
             <div class="fw-bold">Score</div>
@@ -28,6 +29,7 @@ export default {
       return {
         requestId: store.getRequestId()?.toString() || "",
         points: store.getPoints()?.toString() || "",
+        category: store.getSelectedCategory()?.toString() || "",
         duration: store.getQuizDuration()?.toString() || "",
       };
     },

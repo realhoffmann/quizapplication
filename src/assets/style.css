@@ -349,6 +349,10 @@ footer ul li a:hover {
     text-decoration: underline 2px;
 }
 
+.ms-2 {
+    text-align: left;
+}
+
 /* expired Quiz */
 .expired {
     background: linear-gradient(90deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.5) 100%);
