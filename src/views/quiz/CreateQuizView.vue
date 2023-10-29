@@ -2,17 +2,17 @@
     <div class="home">
         <h1>Create Quiz!</h1>
     </div>
-    <CategoryComponent @categoryClicked="handleCategoryClicked"/>
+    <CategoryMolecule @categoryClicked="handleCategoryClicked"/>
 </template>
 
 <script>
-import CategoryComponent from '@/components/CategoryComponent.vue';
+import CategoryMolecule from '@/components/molecules/CategoryMolecule.vue';
 import {useAppStore} from "@/services/store/appStore";
 
 
 export default {
     components: {
-        CategoryComponent
+        CategoryMolecule
     },
 
   methods: {

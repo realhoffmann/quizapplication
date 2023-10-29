@@ -11,13 +11,13 @@
       </div>
     </div>
 
-    <CategoryComponent @categoryClicked="handleCategoryClicked" />
+    <CategoryMolecule @categoryClicked="handleCategoryClicked" />
 
   </div>
 </template>
 
 <script>
-import CategoryComponent from "@/components/CategoryComponent.vue";
+import CategoryMolecule from "@/components/molecules/CategoryMolecule.vue";
 import { handleError } from "@/services/MessageHandlerService";
 import EndpointService from "@/services/server/EndpointService"; // Import the error handling function
 
@@ -70,6 +70,6 @@ export default {
         });
     },
   },
-  components: { CategoryComponent },
+  components: { CategoryMolecule },
 };
 </script>
