@@ -107,7 +107,7 @@ nav a:hover {
 
 .question {
     width: 550px;
-    margin: 40px;
+    margin: 20px;
     background-color: #42b883;
     border: 3px solid white;
     color: white;
@@ -222,16 +222,19 @@ nav a:hover {
     border-color: #42b883;
 }
 
-/*Progress Bar*/
-
-.progress-bar {
-    background-color: #42b883;
+.new-question-button:hover {
+    transform: scale(1.2);
 }
 
-.progress {
+/* Timer Bar*/
+
+.timer-bar {
+    height: 5px;
+    background-color: white;
+    border-radius: 10px;
     margin-bottom: 10px;
+    transition: width 0.1s linear;
 }
-
 
 /* Login */
 
@@ -258,7 +261,7 @@ nav a:hover {
 .card-button {
     margin-top: 10px;
     color: #000;
-    background-color: white;
+    background-color: rgba(0, 0, 0, 0);
     border-color: #000;
 
 }
@@ -292,6 +295,21 @@ nav a:hover {
     padding: 20px;
     text-align: left;
 
+}
+
+/* Rankings */
+
+.rankings {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 500px;
+}
+
+.badge {
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #42b883;
+    color: white;
 }
 
 /* Footer */
