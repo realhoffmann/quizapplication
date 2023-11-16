@@ -8,9 +8,6 @@
     </div>
     <button class="new-question-button" @click="addQuestion">Add Question</button>
     <button class="new-question-button" @click="submit">Submit Quiz</button>
-    <div class="container">
-      <router-view></router-view>
-    </div>
   </div>
 </template>
 
@@ -18,7 +15,7 @@
 import CreateQuestionMolecule from "@/components/molecules/CreateQuestionMolecule.vue";
 import { useAppStore } from "@/services/store/appStore";
 import EndpointService from "@/services/server/EndpointService";
-import {handleError, handleSuccess} from "@/services/MessageHandlerService";
+import { handleError, handleSuccess } from "@/services/MessageHandlerService";
 
 export default {
   components: {
@@ -32,17 +29,17 @@ export default {
   },
   methods: {
     addQuestion() {
-      if(this.$refs.questionComponents.some((component) => component.getQuestionFromForm().question === "")) {
+      if (this.$refs.questionComponents.some((component) => component.getQuestionFromForm().question === "")) {
         handleError("Please fill in all questions");
         return;
       }
 
-      if(this.$refs.questionComponents.some((component) => component.getQuestionFromForm().answerOptions.some(answer => answer.answer === ""))) {
+      if (this.$refs.questionComponents.some((component) => component.getQuestionFromForm().answerOptions.some(answer => answer.answer === ""))) {
         handleError("Please fill in all answers");
         return;
       }
 
-      if(this.$refs.questionComponents.some((component) => component.getQuestionFromForm().answerOptions.filter(answer => answer.correct === true).length !== 1)) {
+      if (this.$refs.questionComponents.some((component) => component.getQuestionFromForm().answerOptions.filter(answer => answer.correct === true).length !== 1)) {
         handleError("Please select one correct answer");
         return;
       }
@@ -61,17 +58,17 @@ export default {
         questions: this.quizQuestions,
       };
 
-      if(formQuiz.questions.some(question => question.question === "")) {
+      if (formQuiz.questions.some(question => question.question === "")) {
         handleError("Please fill in all questions");
         return;
       }
 
-      if(formQuiz.questions.some(question => question.answerOptions.some(answer => answer.answer === ""))) {
+      if (formQuiz.questions.some(question => question.answerOptions.some(answer => answer.answer === ""))) {
         handleError("Please fill in all answers");
         return;
       }
 
-      if(this.$refs.questionComponents.some((component) => component.getQuestionFromForm().answerOptions.filter(answer => answer.correct === true).length !== 1)) {
+      if (this.$refs.questionComponents.some((component) => component.getQuestionFromForm().answerOptions.filter(answer => answer.correct === true).length !== 1)) {
         handleError("Please select one correct answer");
         return;
       }
@@ -81,13 +78,13 @@ export default {
       EndpointService.post("quizzes/createQuiz", formQuiz)
         .then((response) => {
           console.log(response);
-          if(response.status === 201) {
+          if (response.status === 201) {
             handleSuccess("Quiz created successfully");
             const quizId = response.data.id;
-              this.$router.push({
-                name: "lobby",
-                params: { quizIds: quizId },
-              });
+            this.$router.push({
+              name: "lobby",
+              params: { quizIds: quizId },
+            });
           }
           else {
             handleError("Something went wrong");
