@@ -321,6 +321,10 @@ nav a:hover {
 
 /* Rankings */
 
+.rankings-container {
+    min-height: 40vh;
+}
+
 .rankings {
     margin-top: 50px;
     margin-bottom: 50px;

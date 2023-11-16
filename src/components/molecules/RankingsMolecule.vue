@@ -1,13 +1,10 @@
 <template>
-  <div class="container d-flex justify-content-center align-items-center">
+  <div class="rankings-container d-flex justify-content-center align-items-center">
     <div class="rankings">
       <ol class="list-group list-group-numbered">
         <li class="list-group-item d-flex justify-content-between align-items-start">
-          <quiz-info-atom
-              :quizId="dataFromStore.requestId"
-              :duration="dataFromStore.duration"
-              :category="dataFromStore.category"
-          ></quiz-info-atom>
+          <quiz-info-atom :quizId="dataFromStore.requestId" :duration="dataFromStore.duration"
+            :category="dataFromStore.category"></quiz-info-atom>
           <score-atom :points="dataFromStore.points"></score-atom>
         </li>
       </ol>
@@ -39,13 +36,13 @@ export default {
   },
   methods: {
     fromIntOrEmpty(value) {
-      if(isNaN(value)) {
+      if (isNaN(value)) {
         return "";
       }
       return value ? value.toString() : "";
     },
     fromStringOrEmpty(value) {
-      if(typeof value !== "string") {
+      if (typeof value !== "string") {
         return "";
       }
       return parseInt(value);
