@@ -45,7 +45,7 @@ export default {
       if (typeof value !== "string") {
         return "";
       }
-      return parseInt(value);
+      return value ? value : "";
     },
   },
 };
