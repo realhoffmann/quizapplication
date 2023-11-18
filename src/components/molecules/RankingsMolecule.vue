@@ -2,10 +2,11 @@
   <div class="rankings-container d-flex justify-content-center align-items-center">
     <div class="rankings">
       <ol class="list-group list-group-numbered">
-        <li class="list-group-item d-flex justify-content-between align-items-start">
-          <quiz-info-atom :quizId="dataFromStore.requestId" :duration="dataFromStore.duration"
-            :category="dataFromStore.category"></quiz-info-atom>
-          <score-atom :points="dataFromStore.points"></score-atom>
+        <li v-for="participant in participants" :key="participant.id" class="list-group-item d-flex justify-content-between align-items-start">
+          <quiz-info-atom
+              :duration="participant.participantQuizDuration"
+              :nickname="participant.nickname"/>
+          <score-atom :points="participant.points"></score-atom>
         </li>
       </ol>
     </div>
@@ -13,40 +14,41 @@
 </template>
 
 <script>
-import { useAppStore } from "@/services/store/appStore";
 import QuizInfoAtom from "@/components/atoms/QuizInfoAtom.vue";
 import ScoreAtom from "@/components/atoms/ScoreAtom.vue";
+import EndpointService from "@/services/server/EndpointService";
 
 export default {
   name: "RankingsMolecule",
+  props: {
+    quizId: {
+      type: Number,
+      required: true,
+    },
+  },
   components: {
     QuizInfoAtom,
     ScoreAtom,
   },
-  computed: {
-    dataFromStore() {
-      const store = useAppStore();
-      return {
-        requestId: this.fromIntOrEmpty(store.getRequestId()),
-        points: this.fromIntOrEmpty(store.getPoints()),
-        category: this.fromStringOrEmpty(store.getSelectedCategory()),
-        duration: this.fromIntOrEmpty(store.getQuizDuration()),
-      };
-    },
+  data() {
+    return {
+      participants: [],
+    };
   },
   methods: {
-    fromIntOrEmpty(value) {
-      if (isNaN(value)) {
-        return "";
+    async fetchParticipants() {
+      try {
+        console.log("Fetching participants..."+"/quizzes/"+this.quizId+"/participants");
+        const response = await EndpointService.get(`quizzes/${this.quizId}/participants`);
+        this.participants = response.data;
+        console.log("Participants:", this.participants);
+      } catch (error) {
+        console.error("Error fetching participants:", error);
       }
-      return value ? value.toString() : "";
     },
-    fromStringOrEmpty(value) {
-      if (typeof value !== "string") {
-        return "";
-      }
-      return value ? value : "";
-    },
+  },
+  mounted() {
+    this.fetchParticipants();
   },
 };
 </script>

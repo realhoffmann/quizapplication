@@ -99,6 +99,8 @@ export default {
   computed: {
     getCategory() {
       const store = useAppStore();
+      console.log(store.getSelectedCategory());
+
       return store.getSelectedCategory()?.toUpperCase() || "";
     },
   },

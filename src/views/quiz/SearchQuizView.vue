@@ -18,7 +18,7 @@
 <script>
 import CategoryMolecule from "@/components/molecules/CategoryMolecule.vue";
 import { handleError } from "@/services/MessageHandlerService";
-import EndpointService from "@/services/server/EndpointService"; // Import the error handling function
+import EndpointService from "@/services/server/EndpointService";
 
 export default {
   name: "SearchQuizView",

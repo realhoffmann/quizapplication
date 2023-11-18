@@ -37,6 +37,7 @@ export default {
       points: 0,
       timerInterval: null,
       quizStartTime: null,
+      playing: true,
     };
   },
   computed: {
@@ -58,11 +59,10 @@ export default {
         });
     },
     nextQuestion() {
-      this.points = this.points + this.timer * 10;
       if (this.currentQuestionIndex < this.quizData.questions.length - 1) {
         this.currentQuestionIndex++;
         this.resetTimer();
-      } else if (this.points > 0) {
+      } else if (this.playing) {
 
         const quizEndTime = Date.now();
         const quizDuration = (quizEndTime - this.quizStartTime) / 1000;
@@ -74,14 +74,34 @@ export default {
         store.setRequestId(this.requestId);
         store.setSelectedCategory(this.quizData.category);
 
-        this.$router.push({
-          name: "rankings",
-        });
+        const participant = {
+          nickname: store.getNickname(),
+          points: store.getPoints(),
+          participantQuizDuration: store.getQuizDuration(),
+        };
+
+        EndpointService.post(`quizzes/${this.requestId}/addParticipant`, participant)
+            .then((response) => {
+              console.log(store.getNickname() + " has finished the quiz. (points: " + this.points + ")" + " (requestId: " + this.requestId + ")");
+              console.log(response);
+
+              this.$router.push({
+                name: "rankings",
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+
+
         console.log("End of quiz reached. Redirecting to rankings. (points: " + this.points + ")" + " (requestId: " + this.requestId + "))");
 
-        //reset points
-        this.points = 0;
         this.quizStartTime = null;
+        this.playing = false;
+
+        setTimeout(() => {
+          this.points = 0;
+        }, 1000);
       }
     },
     startTimer() {
@@ -102,10 +122,11 @@ export default {
       console.log(answerInfo);
       if (answerInfo.isCorrect) {
         console.log("Correct answer!");
-        this.points = this.points + 150;
+        this.points = this.points + 150 + (this.timer * 10);
         this.nextQuestion();
       } else {
         console.log("Wrong answer!");
+        this.points = this.points - (this.timer * 5) < 0 ? 0 : this.points - (this.timer * 5);
         this.nextQuestion();
       }
     },
@@ -121,6 +142,8 @@ export default {
   },
   mounted() {
     console.log(this.requestId);
+
+    this.playing = true;
     this.searchQuiz(this.requestId);
   },
 };
