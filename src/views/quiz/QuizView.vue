@@ -81,17 +81,17 @@ export default {
         };
 
         EndpointService.post(`quizzes/${this.requestId}/addParticipant`, participant)
-            .then((response) => {
-              console.log(store.getNickname() + " has finished the quiz. (points: " + this.points + ")" + " (requestId: " + this.requestId + ")");
-              console.log(response);
+          .then((response) => {
+            console.log(store.getNickname() + " has finished the quiz. (points: " + this.points + ")" + " (requestId: " + this.requestId + ")");
+            console.log(response);
 
-              this.$router.push({
-                name: "rankings",
-              });
-            })
-            .catch((error) => {
-              console.log(error);
+            this.$router.push({
+              name: "rankings",
             });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
 
 
         console.log("End of quiz reached. Redirecting to rankings. (points: " + this.points + ")" + " (requestId: " + this.requestId + "))");
@@ -126,7 +126,7 @@ export default {
         this.nextQuestion();
       } else {
         console.log("Wrong answer!");
-        this.points = this.points - (this.timer * 5) < 0 ? 0 : this.points - (this.timer * 5);
+        this.points += 0;
         this.nextQuestion();
       }
     },
