@@ -1,16 +1,16 @@
 <template>
-  <div class="home">
-    <h1>Quiz Lobby</h1>
-  </div>
   <div v-if="showQuizEntry">
     <QuizEntryMolecule @start-quiz="startQuiz" />
   </div>
   <div v-else>
+    <div class="home">
+      <h1>Select a Quiz</h1>
+    </div>
     <div class="button-container justify-content-evenly">
       <div v-for="quizId in quizIdsArray" :key="quizId">
-        <button class="action-button" @click="showQuizEntryView(quizId)" :class="{ 'expired': isQuizExpired(quizId) }"
-                :style="getButtonStyle(quizStartDates[quizId], quizDurations[quizId])"
-                :disabled="isQuizExpired(quizId) || quizStartDates[quizId] === 'Loading...'">
+        <button class="category-button" @click="showQuizEntryView(quizId)" :class="{ 'expired': isQuizExpired(quizId) }"
+          :style="getButtonStyle(quizStartDates[quizId], quizDurations[quizId])"
+          :disabled="isQuizExpired(quizId) || quizStartDates[quizId] === 'Loading...'">
           {{ quizId }}
           <br>
           {{ getFormattedStartDate(quizStartDates[quizId]) }}
@@ -33,7 +33,7 @@ import {
   startQuiz
 } from "@/services/quiz/QuizLobbyService";
 import QuizEntryMolecule from "@/components/molecules/QuizEntryMolecule.vue";
-import {useAppStore} from "@/services/store/appStore";
+import { useAppStore } from "@/services/store/appStore";
 
 export default {
   name: "LobbyView",
@@ -85,7 +85,7 @@ export default {
       this.showQuizEntry = false;
       const store = useAppStore();
       store.setNickname(nickname);
-      startQuiz(this.$router, this.isQuizExpired, this.selectedQuizId );
+      startQuiz(this.$router, this.isQuizExpired, this.selectedQuizId);
     },
 
     getButtonStyle(startDate, duration) {

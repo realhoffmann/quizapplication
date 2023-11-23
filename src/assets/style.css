@@ -5,7 +5,11 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    font-family: 'Poppins', sans-serif;
 }
+
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 /* Color Palette */
 
@@ -13,26 +17,26 @@
 #009eff blue
 #ffaa00 orange
 #42b883 green
+42b883ef green transparent
 */
 
 /* NavBar */
 
 .bg-light {
-    background-color: black !important;
+    background-color: #009dff73 !important;
 }
 
 nav a {
-    font-weight: bold;
     text-decoration: none;
     color: white;
+    font-weight: bold;
 }
 
 nav a.router-link-exact-active {
-    color: #42b883;
+    text-decoration: underline 2px;
 }
 
 nav a:hover {
-    color: white;
     text-decoration: underline 2px;
 }
 
@@ -50,12 +54,7 @@ nav a:hover {
 /* Heading */
 
 .home {
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.about {
-    margin-top: 20px;
+    margin-top: 40px;
     margin-bottom: 20px;
 }
 
@@ -71,11 +70,11 @@ nav a:hover {
     margin-top: 40px;
     width: 350px;
     height: 250px;
-    background-color: #42b883;
+    background-color: #42b883ef;
     border: 3px solid white;
     color: white;
     font-weight: bold;
-    font-size: 30px;
+    font-size: 40px;
     border-radius: 30px;
     cursor: pointer;
     transition: transform 0.2s;
@@ -89,7 +88,19 @@ nav a:hover {
 
 .searchForm {
     margin-top: 40px;
-    width: 350px;
+    width: 500px;
+}
+
+.search-button {
+    color: #000;
+    background-color: rgba(0, 0, 0, 0);
+    border-color: #000;
+}
+
+.search-button:hover {
+    color: white;
+    background-color: #42b883;
+    border-color: #42b883;
 }
 
 .searchForm input[type="text"]::placeholder {
@@ -99,12 +110,12 @@ nav a:hover {
 .category-button {
     margin-top: 40px;
     width: 350px;
-    height: 250px;
-    background-color: #42b883;
+    height: 150px;
+    background-color: #42b883ef;
     border: 3px solid white;
     color: white;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 30px;
     border-radius: 30px;
     cursor: pointer;
     transition: transform 0.2s;
@@ -260,26 +271,45 @@ nav a:hover {
     transition: width 0.1s linear;
 }
 
-/* Login */
+/* Login & Register*/
 
-.login-card {
-    padding: 20px;
-    border: none;
-    border-radius: 10px;
+.auth-container {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.form-group label {
+.auth-card {
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    width: 600px;
+}
+
+.auth-title,
+.faq-title,
+.about-title,
+.contact-title {
+    text-align: center;
+    margin-bottom: 30px;
     font-weight: bold;
 }
 
-.loginForm {
-    margin-top: 50px;
-    margin-bottom: 50px;
+.auth-form {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: left;
 }
 
-.registerForm {
-    margin-top: 50px;
-    margin-bottom: 50px;
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.form-label {
+    margin-top: 10px;
 }
 
 .card-button {
@@ -302,13 +332,6 @@ nav a:hover {
 
 .card-text {
     font-size: 16px;
-}
-
-/*FAQ*/
-
-.faq {
-    margin-top: 50px;
-    margin-bottom: 50px;
 }
 
 /*Privacy Policy*/
@@ -348,7 +371,7 @@ footer {
     margin-top: 200px;
     padding-bottom: 50px;
     width: 100%;
-    background-color: black;
+    background-color: #009dff73;
 
 }
 

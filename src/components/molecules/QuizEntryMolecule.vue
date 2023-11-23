@@ -1,14 +1,23 @@
 <template>
-  <div class="quiz-entry">
-    <h1>Enter Your Nickname</h1>
-    <input v-model="nickname" placeholder="Nickname" @input="clearErrorMessage" />
-    <hr>
-    <button @click="startQuiz" class="btn btn-primary card-button">Start Quiz</button>
+  <div class="home">
+    <h1>Enter a Nickname</h1>
+  </div>
+  <div class="container rankings-container d-flex justify-content-center align-items-center">
+    <div class="card searchForm">
+      <div class="card-body">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Nickname" v-model="nickname" @input="clearErrorMessage" />
+        </div>
+        <div class="button-container justify-content-evenly">
+          <button class="btn btn-primary card-button" @click="startQuiz">Start Quiz</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import {handleError} from "@/services/MessageHandlerService";
+import { handleError } from "@/services/MessageHandlerService";
 
 export default {
   data() {

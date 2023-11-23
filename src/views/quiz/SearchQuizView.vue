@@ -2,18 +2,20 @@
   <div class="container d-flex justify-content-center align-items-center">
     <div class="card searchForm">
       <div class="card-body">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search for a quiz" v-model="searchQuery" />
-        </div>
-        <div class="button-container justify-content-evenly">
-          <button class="btn btn-primary card-button" @click="searchQuiz">Search</button>
+        <div class="row">
+          <div class="col-9">
+            <input type="text" class="form-control" placeholder="Search for a quiz" v-model="searchQuery" />
+          </div>
+          <div class="col-3">
+            <button class="btn btn-primary search-button" @click="searchQuiz">Search</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
   <CategoryMolecule @categoryClicked="handleCategoryClicked" />
 </template>
+
 
 <script>
 import CategoryMolecule from "@/components/molecules/CategoryMolecule.vue";
