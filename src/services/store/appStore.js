@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia';
+import {defineStore} from 'pinia';
 
 export const useAppStore = defineStore('appStore', {
     state: () => ({
@@ -7,6 +7,7 @@ export const useAppStore = defineStore('appStore', {
         points: Number,
         quizDuration: Number,
         nickname: String,
+        loggedIn: window.localStorage.getItem("auth_token") !== null && window.localStorage.getItem("auth_token") !== undefined
     }),
 
     actions: {
@@ -39,6 +40,12 @@ export const useAppStore = defineStore('appStore', {
         },
         getNickname() {
             return this.nickname;
+        },
+        setLoggedIn(loggedIn) {
+            this.loggedIn = loggedIn;
+        },
+        getLoggedIn() {
+            return this.loggedIn;
         }
     },
 });
