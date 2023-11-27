@@ -1,5 +1,6 @@
 import EndpointService from "@/services/server/EndpointService";
-import { handleError, handleSuccess } from "@/services/MessageHandlerService";
+import {handleError, handleSuccess} from "@/services/MessageHandlerService";
+import {useAppStore} from "@/services/store/appStore";
 
 /**
  * Register a new user.
@@ -22,7 +23,7 @@ export async function registerUser(user, confirmPassword) {
             role: 'USER',
         };
 
-        const response = await EndpointService.post("users/createUser", formData);
+        const response = await EndpointService.post("auth/register", formData);
 
         if (response.status === 201) {
             user.salutation = 'none';
@@ -32,6 +33,7 @@ export async function registerUser(user, confirmPassword) {
             user.password = '';
             user.country = 'none';
             user.confirmPassword = '';
+            EndpointService.setAuthToken(response.data.token);
 
             handleSuccess("User has been created successfully");
             console.info("User has been created successfully")
@@ -47,6 +49,30 @@ export async function registerUser(user, confirmPassword) {
         }
 
         console.error('Error:', error);
+        handleError("An error occurred. Please try again later.");
+        return false;
+    }
+}
+
+/**
+ * Logs in a user
+ */
+export async function login(email, password) {
+    try {
+        const formData = {
+            email: email,
+            password: password
+        };
+
+        const response = await EndpointService.post("auth/login", formData);
+        const store = useAppStore();
+        if (response.status === 200) {
+            store.setLoggedIn(true);
+            EndpointService.setAuthToken(response.data.token);
+            return true;
+        }
+        return false;
+    } catch (error) {
         handleError("An error occurred. Please try again later.");
         return false;
     }

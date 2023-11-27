@@ -8,27 +8,51 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-evenly text-center" :class="{ 'show': isNavbarOpen }"
-                id="navbarSupportedContent">
-                <router-link to="/">Home</router-link><br>
-                <router-link to="/login">Login</router-link><br>
+                 id="navbarSupportedContent">
+                <router-link to="/">Home</router-link>
+                <br>
+                <a class="login-logout" @click="login">{{ loggedIn ? 'Logout' : 'Login' }}</a><br>
                 <router-link to="/about">About</router-link>
-
             </div>
         </div>
     </nav>
 </template>
  
 <script>
+
+import {useAppStore} from "@/services/store/appStore";
+import {computed} from "vue";
+
 export default {
     data() {
+        const store = useAppStore();
         return {
             isNavbarOpen: false,
+            loggedIn: computed(() => store.getLoggedIn())
         };
     },
     methods: {
         toggleNavbar() {
             this.isNavbarOpen = !this.isNavbarOpen;
         },
+        login() {
+            const store = useAppStore();
+            if (store.getLoggedIn()) {
+                this.logout();
+            } else {
+                this.$router.push({
+                    name: "login",
+                });
+            }
+        },
+        logout() {
+            const store = useAppStore();
+            window.localStorage.removeItem("auth_token");
+            store.setLoggedIn(false);
+            this.$router.push({
+                name: "home",
+            });
+        }
     },
 };
 </script>
