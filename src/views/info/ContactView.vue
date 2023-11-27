@@ -1,5 +1,5 @@
 <template>
-    <div class="container d-flex justify-content-center align-items-center">
+    <div class="privacy container d-flex justify-content-center align-items-center">
         <div class="card loginForm login-card">
             <div class="card-body">
                 <h1 class="card-title text-center">Contact us!</h1>
@@ -23,7 +23,7 @@
                         <textarea class="form-control" id="message" name="message" rows="10" required></textarea>
                     </div>
                     <div class="button-container justify-content-evenly">
-                        <button type="submit" class="btn btn-primary card-button">Send</button>
+                        <button type="submit" class="form-control btn card-button">Send</button>
                     </div>
 
                 </form>

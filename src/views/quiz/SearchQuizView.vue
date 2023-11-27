@@ -3,17 +3,16 @@
     <div class="card searchForm">
       <div class="card-body">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search for a quiz" v-model="searchQuery" />
-        </div>
-        <div class="button-container justify-content-evenly">
-          <button class="btn btn-primary card-button" @click="searchQuiz">Search</button>
+          <input type="text" class="form-control" placeholder="Search for quizzes" aria-label="Search for quizzes"
+            v-model="searchQuery">
+          <button class="btn search-button" @click="searchQuiz">Search</button>
         </div>
       </div>
     </div>
   </div>
-
   <CategoryMolecule @categoryClicked="handleCategoryClicked" />
 </template>
+
 
 <script>
 import CategoryMolecule from "@/components/molecules/CategoryMolecule.vue";

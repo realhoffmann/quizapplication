@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <h1>Welcome to QuizApp!</h1>
-
   </div>
   <div class="button-container justify-content-evenly">
     <router-link to="/search-quiz" v-slot="{ navigate }">
