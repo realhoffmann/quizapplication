@@ -73,7 +73,7 @@
         </div>
         <br>
         <div class="form-actions">
-          <button type="submit" class="form-control btn btn-primary card-button">Register</button>
+          <button type="submit" class="form-control btn card-button">Register</button>
         </div>
       </form>
     </div>

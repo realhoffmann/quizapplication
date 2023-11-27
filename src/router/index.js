@@ -14,6 +14,8 @@ import PrivacyView from '../views/info/PrivacyView.vue'
 import FaqView from '../views/info/FaqView.vue'
 import ImprintView from '../views/info/ImprintView.vue'
 import ContactView from '../views/info/ContactView.vue'
+import UserView from '../views/user/UserView.vue'
+import AdminView from '../views/user/AdminView.vue'
 
 
 const routes = [
@@ -43,7 +45,7 @@ const routes = [
     component: CategoryView
   },
   {
-    path: '/quiz/:requestId', 
+    path: '/quiz/:requestId',
     name: 'quiz',
     props: true,
     component: QuizView
@@ -65,9 +67,9 @@ const routes = [
     component: CreateQuestionView
   },
   {
-  path: '/search-quiz',
-  name: 'search-quiz',
-  component: SearchQuizView
+    path: '/search-quiz',
+    name: 'search-quiz',
+    component: SearchQuizView
   },
   {
     path: '/lobby/:quizIds',
@@ -94,6 +96,16 @@ const routes = [
     path: '/contact',
     name: 'contact',
     component: ContactView
+  },
+  {
+    path: '/user',
+    name: 'user',
+    component: UserView
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: AdminView
   }
 ]
 

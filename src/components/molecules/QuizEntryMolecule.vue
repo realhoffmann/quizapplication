@@ -9,7 +9,7 @@
           <input type="text" class="form-control" placeholder="Nickname" v-model="nickname" @input="clearErrorMessage" />
         </div>
         <div class="button-container justify-content-evenly">
-          <button class="btn btn-primary card-button" @click="startQuiz">Start Quiz</button>
+          <button class="btn card-button" @click="startQuiz">Start Quiz</button>
         </div>
       </div>
     </div>

@@ -14,8 +14,8 @@
                 </div>
                 <div class="form-actions">
 
-                    <button type="submit" class="btn btn-primary card-button">Login</button>
-                    <router-link to="/register" class="btn btn-primary card-button">Register</router-link>
+                    <button type="submit" class="btn card-button">Login</button>
+                    <router-link to="/register" class="btn card-button">Register</router-link>
                 </div>
                 <hr>
 

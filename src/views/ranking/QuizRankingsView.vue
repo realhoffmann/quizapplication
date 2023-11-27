@@ -1,14 +1,14 @@
 <template>
+  <div class="home">
+    <h1>Rankings</h1>
+  </div>
   <div class="container d-flex justify-content-center align-items-center">
     <div class="card searchForm">
       <div class="card-body">
-        <div class="row">
-          <div class="col-9">
-            <input type="text" class="form-control" placeholder="Search for a quiz" v-model="searchQuery" />
-          </div>
-          <div class="col-3">
-            <button class="btn btn-primary search-button" @click="searchQuizOnInputChange">Search</button>
-          </div>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search for quizzes" aria-label="Search for quizzes"
+            v-model="searchQuery">
+          <button class="btn search-button" @click="searchQuiz">Search</button>
         </div>
       </div>
     </div>

@@ -23,7 +23,7 @@
                         <textarea class="form-control" id="message" name="message" rows="10" required></textarea>
                     </div>
                     <div class="button-container justify-content-evenly">
-                        <button type="submit" class="form-control btn btn-primary card-button">Send</button>
+                        <button type="submit" class="form-control btn card-button">Send</button>
                     </div>
 
                 </form>

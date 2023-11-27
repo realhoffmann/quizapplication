@@ -14,8 +14,6 @@
         :answerD="currentQuestion.answerOptions[3] == null ? {} : currentQuestion.answerOptions[3]"
         @answer-clicked="handleAnswerClicked" />
     </div>
-    <br>
-    <button class="btn btn-primary" @click="nextQuestion">Next</button>
   </div>
   <div v-else>
     <p>Quiz is loading...</p>
