@@ -8,8 +8,11 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-evenly text-center" :class="{ 'show': isNavbarOpen }"
-                 id="navbarSupportedContent">
+                id="navbarSupportedContent">
                 <router-link to="/">Home</router-link>
+                <br>
+                <!-- Profile Link: Visible only when the user is logged in -->
+                <router-link v-if="loggedIn" to="/User">Profile</router-link>
                 <br>
                 <a class="login-logout" @click="login">{{ loggedIn ? 'Logout' : 'Login' }}</a><br>
                 <router-link to="/about">About</router-link>
@@ -20,8 +23,8 @@
  
 <script>
 
-import {useAppStore} from "@/services/store/appStore";
-import {computed} from "vue";
+import { useAppStore } from "@/services/store/appStore";
+import { computed } from "vue";
 
 export default {
     data() {
