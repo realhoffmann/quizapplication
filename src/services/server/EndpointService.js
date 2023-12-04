@@ -13,59 +13,39 @@ export default {
      * Get data from the API
      */
     get(endpoint) {
-        let headers = {};
-        if (this.getAuthToken() !== null) {
-            headers = {"Authorization": "Bearer " + this.getAuthToken()};
-        }
         return axios
-            .get(`${BASE_URL}/${endpoint}`, {'headers': headers});
+            .get(`${BASE_URL}/${endpoint}`, {'headers': this.getAuthHeader()});
     },
 
     /**
      * Post data to the API
      */
     post(endpoint, data) {
-        let headers = {};
-        if (this.getAuthToken() !== null) {
-            headers = {"Authorization": "Bearer " + this.getAuthToken()};
-        }
         return axios
-            .post(`${BASE_URL}/${endpoint}`, data, {'headers': headers});
+            .post(`${BASE_URL}/${endpoint}`, data, {'headers': this.getAuthHeader()});
     },
 
     /**
      * Put data to the API
      */
     put(endpoint, data) {
-        let headers = {};
-        if (this.getAuthToken() !== null) {
-            headers = {"Authorization": "Bearer " + this.getAuthToken()};
-        }
         return axios
-            .put(`${BASE_URL}/${endpoint}`, data, {'headers': headers});
+            .put(`${BASE_URL}/${endpoint}`, data, {'headers': this.getAuthHeader()});
     },
 
     /**
      * Delete data from the API
      */
     delete(endpoint) {
-        let headers = {};
-        if (this.getAuthToken() !== null) {
-            headers = {"Authorization": "Bearer " + this.getAuthToken()};
-        }
         return axios
-            .delete(`${BASE_URL}/${endpoint}`, {'headers': headers});
+            .delete(`${BASE_URL}/${endpoint}`, {'headers': this.getAuthHeader()});
     },
 
-    getAuthToken() {
-        return window.localStorage.getItem("auth_token");
-    },
-
-    setAuthToken(token) {
-        if (token !== null) {
-            window.localStorage.setItem("auth_token", token);
-        } else {
-            window.localStorage.removeItem("auth_token");
-        }
+    /**
+     * Set the authorization token
+     * @returns {{Authorization: string}|{}}
+     */
+    getAuthHeader() {
+        return {"Authorization": "Bearer " + (localStorage.getItem("auth_token") || null)};
     }
 };

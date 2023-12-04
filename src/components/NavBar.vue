@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
             <router-link to="/">
-                <a class="navbar-brand"><img src="../assets/logo.png" width="60" height="60">
+                <a class="navbar-brand"><img src="../assets/logo.png" width="60" height="60" alt="? ">
                 </a></router-link>
             <button class="navbar-toggler" type="button" @click="toggleNavbar">
                 <span class="navbar-toggler-icon"></span>
@@ -50,8 +50,7 @@ export default {
         },
         logout() {
             const store = useAppStore();
-            window.localStorage.removeItem("auth_token");
-            store.setLoggedIn(false);
+            store.logOut();
             this.$router.push({
                 name: "home",
             });

@@ -67,13 +67,14 @@ export async function login(email, password) {
         const response = await EndpointService.post("auth/login", formData);
         const store = useAppStore();
         if (response.status === 200) {
-            store.setLoggedIn(true);
-            EndpointService.setAuthToken(response.data.token);
+            store.logIn(response.data.token);
+            localStorage.setItem('auth_token', response.data.token);
             return true;
+        } else {
+            handleError(`Login failed with ${response.status} code. Please try again later.`);
         }
-        return false;
     } catch (error) {
-        handleError("An error occurred. Please try again later.");
+        handleError("An error occurred. Please try again later." + error);
         return false;
     }
 }

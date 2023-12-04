@@ -79,7 +79,7 @@
                             </div>
 
                             <div class="form-actions">
-                                <button type="submit" class="btn card-button">Update Profile</button>
+                                <button class="btn card-button" @click="getUserByEmailAddress">Update Profile</button>
                             </div>
                         </form>
                     </div>
@@ -116,6 +116,8 @@
 <script>
 import { handleError } from "@/services/MessageHandlerService";
 import EndpointService from "@/services/server/EndpointService";
+import {useAppStore} from "@/services/store/appStore";
+import {getUserFromToken} from "@/services/auth/TokenService";
 
 export default {
     name: "UserView",
@@ -123,9 +125,29 @@ export default {
         return {
             searchQuery: "",
             quiz: "",
+            email: "",
         };
     },
     methods: {
+      getUserByEmailAddress() {
+        const store = useAppStore();
+        const user = getUserFromToken(store.getToken());
+        console.log(user);
+
+        EndpointService.get(`users/emails/${user.email}`)
+          .then((response) => {
+            if (response.status === 200) {
+              this.user = response.data;
+              console.log(this.user);
+            } else {
+              handleError("User does not exist.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error while fetching user:", error);
+            handleError("An error occurred while fetching the user.");
+          });
+      },
         searchQuiz() {
             EndpointService.get(`quizzes/${this.searchQuery}`)
                 .then((response) => {

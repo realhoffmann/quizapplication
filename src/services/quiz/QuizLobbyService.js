@@ -85,7 +85,7 @@ export function getButtonStyle(startDate, duration) {
     console.log("Progress: ", progress);
 
     const greenColor = '#42b883ef';
-    const redColor = '#42b883ef';
+    const redColor = '#d80c1e';
     const lightGrayColor = 'rgba(255, 255, 255, 0.5)';
 
     if (progress < 20) {
