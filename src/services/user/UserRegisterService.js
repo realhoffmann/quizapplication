@@ -71,10 +71,10 @@ export async function login(email, password) {
             localStorage.setItem('auth_token', response.data.token);
             return true;
         } else {
-            handleError(`Login failed with ${response.status} code. Please try again later.`);
+            handleError(`Login failed. Please try again later.`);
         }
     } catch (error) {
-        handleError("An error occurred. Please try again later." + error);
+        handleError("An error occurred. Please try again later.");
         return false;
     }
 }

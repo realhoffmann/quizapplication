@@ -52,13 +52,16 @@ export const useAppStore = defineStore('appStore', {
             return this.authToken;
         },
         logIn(token) {
+            console.log('Logging in with token: ' + token);
             this.loggedIn = true;
+            localStorage.setItem('auth_token', token);
             authWorker.postMessage({ type: 'SET_TOKEN', token: token });
         },
 
         logOut() {
             this.loggedIn = false;
             localStorage.removeItem('auth_token');
+            console.log('Logging out and clearing token, token:' + localStorage.getItem('auth_token'));
             localStorage.setItem('isLoggedIn', 'false');
             authWorker.postMessage({ type: 'CLEAR_TOKEN' });
         },

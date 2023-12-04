@@ -6,8 +6,10 @@ export function getUserFromToken(token) {
         console.log("token to decode: ", token);
         const decodedToken = jwtDecode(token);
 
+        console.log("decoded token: ", decodedToken);
+
         return {
-            email: decodedToken.issuer,
+            id: decodedToken.id,
             firstName: decodedToken.firstName,
             lastName: decodedToken.lastName,
             role: decodedToken.role
