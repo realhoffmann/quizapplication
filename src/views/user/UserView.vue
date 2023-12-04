@@ -88,6 +88,7 @@
               <!-- Update Button -->
               <div class="form-actions">
                 <button type="submit" class="btn card-button">Update Profile</button>
+                <button type="button" class="btn card-button" @click="deleteAccount">Delete Account</button>
               </div>
             </form>
           </div>
@@ -125,6 +126,7 @@ import { handleError } from "@/services/MessageHandlerService";
 import EndpointService from "@/services/server/EndpointService";
 import { getUserFromToken } from "@/services/auth/TokenService";
 import * as HandlerService from "@/services/MessageHandlerService";
+import {useAppStore} from "@/services/store/appStore";
 
 export default {
   name: "UserView",
@@ -183,6 +185,30 @@ export default {
             console.error("Error updating profile:", error);
             handleError("An error occurred while updating the profile.");
           });
+    },
+    deleteAccount() {
+      if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+        EndpointService.delete(`users/${this.user.id}`)
+            .then(response => {
+              if (response.status === 200 || response.status === 204) {
+                console.log("Account deleted successfully.");
+                this.logout();
+              } else {
+                handleError("Error deleting account.");
+              }
+            })
+            .catch(error => {
+              console.error("Error deleting account:", error);
+              handleError("An error occurred while deleting the account.");
+            });
+      }
+    },
+    logout() {
+      const store = useAppStore();
+      store.logOut();
+      this.$router.push({
+        name: "home",
+      });
     },
     searchQuiz() {
       EndpointService.get(`quizzes/${this.searchQuery}`)
