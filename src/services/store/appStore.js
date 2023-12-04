@@ -48,11 +48,9 @@ export const useAppStore = defineStore('appStore', {
         getLoggedIn() {
             return this.loggedIn;
         },
-        getToken() {
-            return this.authToken;
-        },
         logIn(token) {
             console.log('Logging in with token: ' + token);
+            localStorage.setItem('isLoggedIn', 'true');
             this.loggedIn = true;
             localStorage.setItem('auth_token', token);
             authWorker.postMessage({ type: 'SET_TOKEN', token: token });

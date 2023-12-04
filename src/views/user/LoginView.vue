@@ -26,6 +26,7 @@
 
 <script>
 import { login } from "@/services/user/UserRegisterService";
+import router from "@/router";
 
 export default {
     data() {
@@ -36,6 +37,9 @@ export default {
     },
     methods: {
         async handleSubmit() {
+          router.afterEach(() => {
+            location.reload();
+          });
             await login(this.email, this.password, this.$router).then((result) => {
                 if (result) {
                     this.goToHomeView();
