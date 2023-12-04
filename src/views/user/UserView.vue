@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <!-- User Profile Form -->
     <div class="row">
       <div class="col-8">
         <div class="user-container">
@@ -10,7 +9,7 @@
               <h1 class="auth-title">Profile</h1>
             </div>
             <form class="auth-form" @submit.prevent="updateUserProfile">
-              <!-- Gender -->
+
               <div class="row mb-2">
                 <div class="form-group col-md-3">
                   <label for="salutation">Gender</label>
@@ -22,26 +21,22 @@
                   </select>
                 </div>
 
-                <!-- First Name -->
                 <div class="col-md-4">
                   <label for="firstName">First Name</label>
                   <input type="text" v-model="user.firstName" class="form-control" id="firstName" required>
                 </div>
 
-                <!-- Last Name -->
                 <div class="col-md-5">
                   <label for="lastName">Last Name</label>
                   <input type="text" v-model="user.lastName" class="form-control" id="lastName" required>
                 </div>
               </div>
 
-              <!-- Email -->
               <div class="mb-2">
                 <label for="email">E-Mail Address</label>
                 <input type="email" v-model="user.email" class="form-control" id="email" required>
               </div>
 
-              <!-- Country -->
               <div>
                 <label for="country">Country</label>
                 <select v-model="user.country" class="form-control" id="country">
@@ -76,26 +71,31 @@
                 </select>
               </div>
 
-              <div class="mb-2">
-                <label for="password">Password</label>
-                <input type="password" v-model="user.password" class="form-control" id="password" minlength="8" required>
-              </div>
-              <div class="mb-2">
-                <label for="confirm-password">Confirm Password</label>
-                <input type="password" v-model="user.confirmPassword" class="form-control" id="confirm-password" minlength="8" required>
+              <div>
+                <label class="password-toggle" :class="{ open: showPasswordFields }" @click="togglePasswordDropdown">
+                  Change Password
+                </label>
+                <div v-if="showPasswordFields">
+                  <div class="mb-2">
+                    <label for="password">New Password</label>
+                    <input type="password" v-model="user.password" class="form-control" id="password" minlength="8" required>
+                  </div>
+                  <div class="mb-2">
+                    <label for="confirm-password">Confirm New Password</label>
+                    <input type="password" v-model="user.confirmPassword" class="form-control" id="confirm-password" minlength="8" required>
+                  </div>
+                </div>
               </div>
 
-              <!-- Update Button -->
               <div class="form-actions">
-                <button type="submit" class="btn card-button">Update Profile</button>
-                <button type="button" class="btn card-button" @click="deleteAccount">Delete Account</button>
+                <button type="submit" class="btn update-button">Update Profile</button>
+                <button type="button" class="btn delete-button" @click="deleteAccount">Delete Account</button>
               </div>
             </form>
           </div>
         </div>
       </div>
 
-      <!-- Search Bar and Quiz Section -->
       <div class="col-4 search-bar">
         <div class="card">
           <div class="card-body">
@@ -134,6 +134,7 @@ export default {
     return {
       searchQuery: "",
       quiz: "",
+      showPasswordFields: false,
       user: {
         id: null,
         salutation: "",
@@ -150,6 +151,9 @@ export default {
     this.loadUserData();
   },
   methods: {
+    togglePasswordDropdown() {
+      this.showPasswordFields = !this.showPasswordFields;
+    },
     loadUserData() {
       const tokenUser = getUserFromToken(localStorage.getItem("auth_token"));
       EndpointService.get(`users/${tokenUser.id}`)
@@ -233,7 +237,3 @@ export default {
   },
 };
 </script>
-
-<style>
-/* Your styles here */
-</style>
