@@ -6,8 +6,7 @@
         <div class="row mb-2">
           <div class="from-group col-md-3">
             <label class="form-label" for="salutation">Gender</label>
-            <select v-model="user.salutation" class="form-control" id="salutation" name="salutation">
-              <option value="none">-</option>
+            <select v-model="user.salutation" class="form-control" id="salutation" name="salutation" required>
               <option value="MALE">Male</option>
               <option value="FEMALE">Female</option>
               <option value="OTHER">Other</option>
@@ -30,8 +29,8 @@
         </div>
         <div>
           <label class="form-label" for="country">Country</label>
-          <select v-model="user.country" class="form-control" id="country" name="country">
-            <option value="none">-</option>
+          <!-- required but none is not a valid value -->
+          <select v-model="user.country" class="form-control" id="country" name="country" required >
             <option value="AT">Austria</option>
             <option value="BE">Belgium</option>
             <option value="BG">Bulgaria</option>
