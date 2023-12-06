@@ -86,19 +86,10 @@
                                 <option value="CY">Cyprus</option>
                             </select>
                         </div>
-                        <div class="mb-2">
-                            <label class="form-label" for="password">Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="********" minlength="8"
-                                required>
-                        </div>
-                        <div class="mb-2">
-                            <label class="form-label" for="confirm-password">Confirm Password</label>
-                            <input type="password" class="form-control" id="confirm-password" placeholder="********"
-                                minlength="8" required>
-                        </div>
 
                         <div class="form-actions">
                             <button type="submit" class="btn card-button">Update Profile</button>
+                          <button type="button" class="btn delete-button" @click="deleteAccount">Delete Account</button>
                         </div>
                     </form>
                 </div>
@@ -121,6 +112,9 @@
 </template>
   
 <script>
+import EndpointService from "@/services/server/EndpointService";
+import {handleError} from "@/services/MessageHandlerService";
+
 export default {
     data() {
         return {
@@ -142,11 +136,24 @@ export default {
                 this.searchResults = [{ id: 1, title: 'General Knowledge Quiz' }];
             }
         },
+      deleteAccount() {
+        if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+          EndpointService.delete(`users/${this.user.id}`)
+              .then(response => {
+                if (response.status === 200 || response.status === 204) {
+                  console.log("Account deleted successfully.");
+                  this.logout();
+                } else {
+                  handleError("Error deleting account.");
+                }
+              })
+              .catch(error => {
+                console.error("Error deleting account:", error);
+                handleError("An error occurred while deleting the account.");
+              });
+        }
+      },
     }
 };
 </script>
-  
-<style>
-/* Add your CSS styles here */
-</style>
   
