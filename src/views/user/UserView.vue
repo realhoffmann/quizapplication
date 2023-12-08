@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-8">
+      <div class="col-md-8">
         <div class="user-container">
           <div class="user-card">
             <div class="profile-header d-flex align-items-center">
@@ -96,7 +96,7 @@
         </div>
       </div>
 
-      <div class="col-4 search-bar">
+      <div class="col-md-4 search-bar">
         <div class="card">
           <div class="card-body">
             <div class="input-group">

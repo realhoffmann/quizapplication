@@ -10,10 +10,10 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse justify-content-evenly text-center" :class="{ 'show': isNavbarOpen }" id="navbarSupportedContent">
-        <router-link to="/">Home</router-link><br>
-        <router-link v-if="loggedIn" :to="userLink">{{ linkText }}</router-link><br>
-        <a class="login-logout" @click="login">{{ loggedIn ? 'Logout' : 'Login' }}</a><br>
-        <router-link to="/about">About</router-link>
+        <div><router-link to="/">Home</router-link></div>
+        <div v-if="loggedIn" ><router-link :to="userLink">{{ linkText }}</router-link></div>
+        <div><router-link to="/login" @click="login">{{ loggedIn ? 'Logout' : 'Login' }}</router-link></div>
+        <div><router-link to="/about">About</router-link></div>
       </div>
     </div>
   </nav>

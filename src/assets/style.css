@@ -51,17 +51,6 @@ nav a:hover {
     background-color: white;
 }
 
-.login-logout {
-    cursor: pointer;
-    color: white;
-    margin-top: 8px;
-}
-
-.login-logout:hover {
-    text-decoration: underline;
-}
-
-
 /* Heading */
 
 .home {
