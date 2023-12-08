@@ -118,21 +118,16 @@ import {handleError} from "@/services/MessageHandlerService";
 export default {
     data() {
         return {
-            searchFor: 'none', // none, user, or quiz
-            searchQuery: '', // The search query
-            searchResults: [], // The search results
+            searchFor: 'none',
+            searchQuery: '',
+            searchResults: [],
         };
     },
     methods: {
         search() {
-            // Perform the search based on the type and query.
-            // You would typically make an API call here.
-            // Below is just a placeholder for demonstration.
             if (this.searchFor === 'user') {
-                // Replace with actual API call
                 this.searchResults = [{ id: 1, name: 'John Doe', email: 'john@example.com' }];
             } else if (this.searchFor === 'quiz') {
-                // Replace with actual API call
                 this.searchResults = [{ id: 1, title: 'General Knowledge Quiz' }];
             }
         },

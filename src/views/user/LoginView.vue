@@ -6,7 +6,7 @@
                 <div class="form-group">
                     <label class="form-label" for="username">User Name/E-Mail</label>
                     <input v-model="email" type="text" class="form-control" id="username"
-                        placeholder="Max/max.muster@gmail.com">
+                        placeholder="max.muster@gmail.com">
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="password">Password</label>
