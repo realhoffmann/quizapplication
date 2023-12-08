@@ -16,6 +16,7 @@ import CreateQuestionMolecule from "@/components/molecules/CreateQuestionMolecul
 import { useAppStore } from "@/services/store/appStore";
 import EndpointService from "@/services/server/EndpointService";
 import { handleError, handleSuccess } from "@/services/MessageHandlerService";
+import {getUserFromToken} from "@/services/auth/TokenService";
 
 export default {
   components: {
@@ -49,9 +50,12 @@ export default {
     submit() {
       const questionComponents = this.$refs.questionComponents;
       this.quizQuestions = questionComponents.map((component) => component.getQuestionFromForm());
+      const store = useAppStore();
+      store.checkAuthState();
+      const tokenUser = getUserFromToken(localStorage.getItem("auth_token"));
 
       const formQuiz = {
-        creatorId: 1,
+        creatorId: tokenUser.id || 1,
         category: this.getCategory,
         startDate: new Date().toLocaleDateString('en-CA'),
         duration: 30,
@@ -92,6 +96,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          handleError("Something went wrong");
         });
 
     },

@@ -155,6 +155,8 @@ export default {
       this.showPasswordFields = !this.showPasswordFields;
     },
     loadUserData() {
+      const store = useAppStore();
+      store.checkAuthState();
       const tokenUser = getUserFromToken(localStorage.getItem("auth_token"));
       EndpointService.get(`users/${tokenUser.id}`)
           .then((response) => {
@@ -214,23 +216,38 @@ export default {
       });
     },
     searchQuiz() {
-      EndpointService.get(`quizzes/${this.searchQuery}`)
+      EndpointService.get(`quizzes/${this.searchQuery}/creator/${this.user.id}`)
           .then((response) => {
             if (response.status === 200) {
               this.quiz = response.data;
-              console.log(this.quiz);
+              console.log(JSON.stringify(this.quiz));
 
               this.$router.push({
                 name: "lobby",
-                params: { quizIds: this.quiz.id },
+                params: { quizIds: response.data.id },
               });
             } else {
-              handleError("Quiz does not exist.");
+              handleError("Quiz not found.");
             }
           })
           .catch((error) => {
             console.error("Error while fetching quiz:", error);
-            handleError("An error occurred while fetching the quiz.");
+            if (error.response) {
+              console.error("Response status:", error.response.status);
+              console.error("Response data:", error.response.data);
+
+              if (error.response.status === 404) {
+                handleError("Quiz not found. Please enter a valid quiz ID.");
+              } else {
+                handleError("An error occurred while fetching the quiz.");
+              }
+            } else if (error.request) {
+              console.error("No response received:", error.request);
+              handleError("No response received from the server. Please try again.");
+            } else {
+              console.error("Request setup error:", error.message);
+              handleError("An error occurred while setting up the request.");
+            }
           });
     },
   },

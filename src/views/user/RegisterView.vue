@@ -6,11 +6,7 @@
         <div class="row mb-2">
           <div class="from-group col-md-3">
             <label class="form-label" for="salutation">Gender</label>
-            <select v-model="user.salutation" class="form-control" id="salutation" name="salutation" required>
-              <option value="MALE">Male</option>
-              <option value="FEMALE">Female</option>
-              <option value="OTHER">Other</option>
-            </select>
+            <SalutationSelectAtom  v-model="user.salutation"/>
           </div>
           <div class="col-md-4">
             <label class="form-label" for="firstName">First Name</label>
@@ -29,36 +25,7 @@
         </div>
         <div>
           <label class="form-label" for="country">Country</label>
-          <!-- required but none is not a valid value -->
-          <select v-model="user.country" class="form-control" id="country" name="country" required >
-            <option value="AT">Austria</option>
-            <option value="BE">Belgium</option>
-            <option value="BG">Bulgaria</option>
-            <option value="DK">Denmark</option>
-            <option value="DE">Germany</option>
-            <option value="EE">Estonia</option>
-            <option value="FI">Finland</option>
-            <option value="FR">France</option>
-            <option value="GR">Greece</option>
-            <option value="IE">Ireland</option>
-            <option value="IT">Italy</option>
-            <option value="LV">Latvia</option>
-            <option value="LT">Lithuania</option>
-            <option value="LU">Luxembourg</option>
-            <option value="MT">Malta</option>
-            <option value="NL">Netherlands</option>
-            <option value="PL">Poland</option>
-            <option value="PT">Portugal</option>
-            <option value="RO">Romania</option>
-            <option value="SE">Sweden</option>
-            <option value="SK">Slovakia</option>
-            <option value="SI">Slovenia</option>
-            <option value="ES">Spain</option>
-            <option value="CZ">Czech Republic</option>
-            <option value="HU">Hungary</option>
-            <option value="GB">Great Britain</option>
-            <option value="CY">Cyprus</option>
-          </select>
+          <CountriesSelectAtom v-model="user.country" />
         </div>
         <div class="mb-2">
           <label class="form-label" for="password">Password</label>
@@ -81,8 +48,11 @@
 
 <script>
 import { registerUser } from "@/services/user/UserRegisterService";
+import CountriesSelectAtom from "@/components/atoms/CountriesSelectAtom.vue";
+import SalutationSelectAtom from "@/components/atoms/SalutationSelectAtom.vue";
 
 export default {
+  components: {SalutationSelectAtom, CountriesSelectAtom},
   data() {
     return {
       user: {

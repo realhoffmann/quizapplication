@@ -38,6 +38,7 @@ function setExpiryTimer() {
 function clearToken() {
     token = null;
     clearTimeout(expiryTimer);
+    localStorage.removeItem('auth_token');
     postMessage({ type: 'AUTH_UPDATED', loggedIn: false });
 }
 

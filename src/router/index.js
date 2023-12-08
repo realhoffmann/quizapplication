@@ -53,29 +53,34 @@ const routes = [
   {
     path: '/create-quiz',
     name: 'create-quiz',
-    component: CreateQuizView
+    component: CreateQuizView,
+    meta: { requiresAuth: true },
   },
   {
     path: '/rankings',
     name: 'rankings',
     component: RankingsView,
     props: (route) => ({ requestId: route.query.requestId, points: route.query.points }),
+    meta: { requiresAuth: true },
   },
   {
     path: '/create-question',
     name: 'create-question',
-    component: CreateQuestionView
+    component: CreateQuestionView,
+    meta: { requiresAuth: true },
   },
   {
     path: '/search-quiz',
     name: 'search-quiz',
-    component: SearchQuizView
+    component: SearchQuizView,
+    meta: { requiresAuth: true },
   },
   {
     path: '/lobby/:quizIds',
     name: 'lobby',
     component: LobbyView,
     props: true,
+    meta: { requiresAuth: true },
   },
   {
     path: '/privacy',
@@ -100,12 +105,14 @@ const routes = [
   {
     path: '/user',
     name: 'user',
-    component: UserView
+    component: UserView,
+    meta: { requiresAuth: true },
   },
   {
     path: '/admin',
     name: 'admin',
-    component: AdminView
+    component: AdminView,
+    meta: { requiresAuth: true },
   }
 ]
 
