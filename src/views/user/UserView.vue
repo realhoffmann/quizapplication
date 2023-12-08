@@ -170,11 +170,10 @@ export default {
           });
     },
     updateUserProfile() {
-     //when password is changed check if password and confirmPassword are equal
-     // if (this.user.password !== this.user.confirmPassword) {
-     // handleError("Passwords do not match.");
-     // return;
-     // }
+     if (this.user.password !== this.user.confirmPassword) {
+     handleError("Passwords do not match.");
+     return;
+     }
 
       EndpointService.put(`users/${this.user.id}`, this.user)
           .then(response => {
