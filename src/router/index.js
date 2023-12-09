@@ -112,8 +112,12 @@ const routes = [
     path: '/admin',
     name: 'admin',
     component: AdminView,
-    meta: { requiresAuth: true },
-  }
+    meta: { requiresAuth: true, requiresAdmin: true},
+  },
+   {
+       path: '/:pathMatch(.*)*',
+       redirect: {name: 'home'}
+   }
 ]
 
 const router = createRouter({

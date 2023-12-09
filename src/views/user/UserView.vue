@@ -14,7 +14,6 @@
                 <div class="form-group col-md-3">
                   <label for="salutation">Gender</label>
                   <select v-model="user.salutation" class="form-control" id="salutation">
-                    <option value="none">-</option>
                     <option value="MALE">Male</option>
                     <option value="FEMALE">Female</option>
                     <option value="OTHER">Other</option>
@@ -40,7 +39,6 @@
               <div>
                 <label for="country">Country</label>
                 <select v-model="user.country" class="form-control" id="country">
-                  <option value="none">-</option>
                   <option value="AT">Austria</option>
                   <option value="BE">Belgium</option>
                   <option value="BG">Bulgaria</option>
@@ -179,6 +177,7 @@ export default {
 
       EndpointService.put(`users/${this.user.id}`, this.user)
           .then(response => {
+            console.log(this.user)
             if (response.status === 200) {
               console.log("Profile updated successfully.");
               HandlerService.handleSuccess("Profile updated successfully.");
