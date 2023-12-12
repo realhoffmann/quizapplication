@@ -34,7 +34,6 @@ export async function registerUser(user, confirmPassword) {
             user.password = '';
             user.country = 'none';
             user.confirmPassword = '';
-            EndpointService.setAuthToken(response.data.token);
 
             handleSuccess("User has been created successfully");
             console.info("User has been created successfully")

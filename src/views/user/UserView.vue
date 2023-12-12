@@ -13,11 +13,7 @@
               <div class="row mb-2">
                 <div class="form-group col-md-3">
                   <label for="salutation">Gender</label>
-                  <select v-model="user.salutation" class="form-control" id="salutation">
-                    <option value="MALE">Male</option>
-                    <option value="FEMALE">Female</option>
-                    <option value="OTHER">Other</option>
-                  </select>
+                    <SalutationSelectAtom v-model="user.salutation"/>
                 </div>
 
                 <div class="col-md-4">
@@ -38,35 +34,7 @@
 
               <div>
                 <label for="country">Country</label>
-                <select v-model="user.country" class="form-control" id="country">
-                  <option value="AT">Austria</option>
-                  <option value="BE">Belgium</option>
-                  <option value="BG">Bulgaria</option>
-                  <option value="DK">Denmark</option>
-                  <option value="DE">Germany</option>
-                  <option value="EE">Estonia</option>
-                  <option value="FI">Finland</option>
-                  <option value="FR">France</option>
-                  <option value="GR">Greece</option>
-                  <option value="IE">Ireland</option>
-                  <option value="IT">Italy</option>
-                  <option value="LV">Latvia</option>
-                  <option value="LT">Lithuania</option>
-                  <option value="LU">Luxembourg</option>
-                  <option value="MT">Malta</option>
-                  <option value="NL">Netherlands</option>
-                  <option value="PL">Poland</option>
-                  <option value="PT">Portugal</option>
-                  <option value="RO">Romania</option>
-                  <option value="SE">Sweden</option>
-                  <option value="SK">Slovakia</option>
-                  <option value="SI">Slovenia</option>
-                  <option value="ES">Spain</option>
-                  <option value="CZ">Czech Republic</option>
-                  <option value="HU">Hungary</option>
-                  <option value="GB">Great Britain</option>
-                  <option value="CY">Cyprus</option>
-                </select>
+                  <CountriesSelectAtom v-model="user.country"/>
               </div>
 
               <div>
@@ -120,24 +88,27 @@
 </template>
 
 <script>
-import { handleError } from "@/services/MessageHandlerService";
-import EndpointService from "@/services/server/EndpointService";
-import { getUserFromToken } from "@/services/auth/TokenService";
 import * as HandlerService from "@/services/MessageHandlerService";
+import {handleError} from "@/services/MessageHandlerService";
+import EndpointService from "@/services/server/EndpointService";
+import {getUserFromToken} from "@/services/auth/TokenService";
 import {useAppStore} from "@/services/store/appStore";
+import SalutationSelectAtom from "@/components/atoms/SalutationSelectAtom.vue";
+import CountriesSelectAtom from "@/components/atoms/CountriesSelectAtom.vue";
 
 export default {
-  name: "UserView",
-  data() {
-    return {
-      searchQuery: "",
-      quiz: "",
-      showPasswordFields: false,
-      user: {
-        id: null,
-        salutation: "",
-        firstName: "",
-        lastName: "",
+    name: "UserView",
+    components: {CountriesSelectAtom, SalutationSelectAtom},
+    data() {
+        return {
+            searchQuery: "",
+            quiz: "",
+            showPasswordFields: false,
+            user: {
+                id: null,
+                salutation: "",
+                firstName: "",
+                lastName: "",
         email: "",
         country: "",
         password: "",
