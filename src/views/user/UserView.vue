@@ -12,8 +12,12 @@
 
               <div class="row mb-2">
                 <div class="form-group col-md-3">
-                  <label for="salutation">Gender</label>
-                    <SalutationSelectAtom v-model="user.salutation"/>
+                    <label for="salutation">Gender</label>
+                    <select v-model="user.salutation" class="form-control" id="salutation">
+                        <option value="MALE">Male</option>
+                        <option value="FEMALE">Female</option>
+                        <option value="OTHER">Other</option>
+                    </select>
                 </div>
 
                 <div class="col-md-4">
@@ -32,10 +36,38 @@
                 <input type="email" v-model="user.email" class="form-control" id="email" required>
               </div>
 
-              <div>
-                <label for="country">Country</label>
-                  <CountriesSelectAtom v-model="user.country"/>
-              </div>
+                <div>
+                    <label for="country">Country</label>
+                    <select v-model="user.country" class="form-control" id="country">
+                        <option value="AT">Austria</option>
+                        <option value="BE">Belgium</option>
+                        <option value="BG">Bulgaria</option>
+                        <option value="DK">Denmark</option>
+                        <option value="DE">Germany</option>
+                        <option value="EE">Estonia</option>
+                        <option value="FI">Finland</option>
+                        <option value="FR">France</option>
+                        <option value="GR">Greece</option>
+                        <option value="IE">Ireland</option>
+                        <option value="IT">Italy</option>
+                        <option value="LV">Latvia</option>
+                        <option value="LT">Lithuania</option>
+                        <option value="LU">Luxembourg</option>
+                        <option value="MT">Malta</option>
+                        <option value="NL">Netherlands</option>
+                        <option value="PL">Poland</option>
+                        <option value="PT">Portugal</option>
+                        <option value="RO">Romania</option>
+                        <option value="SE">Sweden</option>
+                        <option value="SK">Slovakia</option>
+                        <option value="SI">Slovenia</option>
+                        <option value="ES">Spain</option>
+                        <option value="CZ">Czech Republic</option>
+                        <option value="HU">Hungary</option>
+                        <option value="GB">Great Britain</option>
+                        <option value="CY">Cyprus</option>
+                    </select>
+                </div>
 
               <div>
                 <label class="password-toggle" :class="{ open: showPasswordFields }" @click="togglePasswordDropdown">
@@ -93,12 +125,9 @@ import {handleError} from "@/services/MessageHandlerService";
 import EndpointService from "@/services/server/EndpointService";
 import {getUserFromToken} from "@/services/auth/TokenService";
 import {useAppStore} from "@/services/store/appStore";
-import SalutationSelectAtom from "@/components/atoms/SalutationSelectAtom.vue";
-import CountriesSelectAtom from "@/components/atoms/CountriesSelectAtom.vue";
 
 export default {
     name: "UserView",
-    components: {CountriesSelectAtom, SalutationSelectAtom},
     data() {
         return {
             searchQuery: "",
@@ -109,16 +138,16 @@ export default {
                 salutation: "",
                 firstName: "",
                 lastName: "",
-        email: "",
-        country: "",
-        password: "",
-        confirmPassword: "",
-      },
-    };
-  },
-  created() {
-    this.loadUserData();
-  },
+                email: "",
+                country: "",
+                password: "",
+                confirmPassword: "",
+            },
+        };
+    },
+    created() {
+        this.loadUserData();
+    },
   methods: {
     togglePasswordDropdown() {
       this.showPasswordFields = !this.showPasswordFields;
