@@ -110,23 +110,25 @@
           </div>
         </div>
         <!-- ToDo: Should be a molecule -->
+        <div v-if="fetchedQuiz" class="quiz-details">
         <div class="button-container justify-content-evenly">
           <div class="quiz-card d-flex flex-column justify-content-center align-items-center">
-            Quiz id
+            {{ fetchedQuiz.id}}
             <div>
-              <button class="btn quiz-button">Play</button>
               <button class="btn quiz-button">Edit</button>
+              <button class="btn quiz-button" @click="deleteQuiz(fetchedQuiz.id)">Delete</button>
             </div>
           </div>
         </div>
     </div>
   </div>
   </div>
+  </div>
 </template>
 
 <script>
 import * as HandlerService from "@/services/MessageHandlerService";
-import {handleError} from "@/services/MessageHandlerService";
+import {handleError, handleSuccess} from "@/services/MessageHandlerService";
 import EndpointService from "@/services/server/EndpointService";
 import {getUserFromToken} from "@/services/auth/TokenService";
 import {useAppStore} from "@/services/store/appStore";
@@ -138,6 +140,7 @@ export default {
             searchQuery: "",
             quiz: "",
             showPasswordFields: false,
+            fetchedQuiz: null,
             user: {
                 id: null,
                 salutation: "",
@@ -229,13 +232,8 @@ export default {
       EndpointService.get(`quizzes/${this.searchQuery}/creator/${this.user.id}`)
           .then((response) => {
             if (response.status === 200) {
-              this.quiz = response.data;
-              console.log(JSON.stringify(this.quiz));
-
-              this.$router.push({
-                name: "lobby",
-                params: { quizIds: response.data.id },
-              });
+              this.fetchedQuiz = response.data;
+              console.log(this.fetchedQuiz);
             } else {
               handleError("Quiz not found.");
             }
@@ -258,6 +256,21 @@ export default {
               console.error("Request setup error:", error.message);
               handleError("An error occurred while setting up the request.");
             }
+          });
+    },
+    deleteQuiz(quizId) {
+      EndpointService.delete(`quizzes/${quizId}`)
+          .then(response => {
+            if (response.status === 200 || response.status === 204) {
+              console.log('Quiz deleted successfully');
+              handleSuccess("Quiz deleted successfully");
+            } else {
+              handleError('Failed to delete quiz.');
+            }
+          })
+          .catch(error => {
+            console.error('Error while deleting quiz:', error);
+            handleError('An error occurred while deleting the quiz.');
           });
     },
   },
