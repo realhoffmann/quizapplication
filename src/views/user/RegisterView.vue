@@ -8,6 +8,11 @@
             <label class="form-label" for="salutation">Gender</label>
             <SalutationSelectAtom  v-model="user.salutation"/>
           </div>
+          <div v-if="user.salutation === 'OTHER'" class="col-md-9">
+            <label class="form-label" for="otherSalutationDetail">Please Specify</label>
+            <input v-model="user.otherSalutationDetail" type="text" class="form-control" id="otherSalutationDetail" placeholder="Specify your salutation/gender" maxlength="30">
+          </div>
+
           <div class="col-md-4">
             <label class="form-label" for="firstName">First Name</label>
             <input v-model="user.firstName" type="text" class="form-control" id="firstName" placeholder="Max" required>
@@ -57,6 +62,7 @@ export default {
     return {
       user: {
         salutation: 'none',
+        otherSalutationDetail: '',
         firstName: '',
         lastName: '',
         email: '',

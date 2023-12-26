@@ -23,6 +23,10 @@ export async function registerUser(user, confirmPassword) {
             role: 'USER',
         };
 
+        if (user.salutation === 'OTHER') {
+            formData.otherSalutationDetail = user.otherSalutationDetail;
+        }
+
         const response = await EndpointService.post("auth/register", formData);
 
         console.info("User registration response: " + JSON.stringify(response));
@@ -34,6 +38,7 @@ export async function registerUser(user, confirmPassword) {
             user.password = '';
             user.country = 'none';
             user.confirmPassword = '';
+            user.otherSalutationDetail = '';
 
             handleSuccess("User has been created successfully");
             console.info("User has been created successfully")

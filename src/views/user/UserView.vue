@@ -20,6 +20,11 @@
                     </select>
                 </div>
 
+                <div class="col-md-9" v-if="user.salutation === 'OTHER'">
+                  <label for="otherSalutationDetail">Please Specify</label>
+                  <input type="text" v-model="user.otherSalutationDetail" class="form-control" id="otherSalutationDetail" maxlength="30">
+                </div>
+
                 <div class="col-md-4">
                   <label for="firstName">First Name</label>
                   <input type="text" v-model="user.firstName" class="form-control" id="firstName" required>
@@ -142,6 +147,7 @@ export default {
                 country: "",
                 password: "",
                 confirmPassword: "",
+                otherSalutationDetail: "",
             },
         };
     },
@@ -175,7 +181,12 @@ export default {
      return;
      }
 
-      EndpointService.put(`users/${this.user.id}`, this.user)
+      const payload = {
+        ...this.user,
+        ...(this.user.salutation === 'OTHER' && { otherSalutationDetail: this.user.otherSalutationDetail }),
+      };
+
+      EndpointService.put(`users/${this.user.id}`, payload)
           .then(response => {
             console.log(this.user)
             if (response.status === 200) {
