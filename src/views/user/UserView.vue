@@ -35,9 +35,11 @@
           <div class="user-container">
             <div class="user-card">
               <div class="profile-header d-flex align-items-center">
-                <img src="../../assets/default-profile-pic.webp" alt="Profile Picture" class="profile-pic"/>
-                <h1 class="auth-title">Profile</h1>
+                <img v-if="profilePicture" :src="profilePicture" alt="Profile" class="profile-pic"/>
+                <img v-else src="../../assets/default-profile-pic.webp" alt="Default" class="profile-pic"/>
+                <input type="file" id="profilePicture" @change="handleFileUpload" accept="image/*">
               </div>
+
               <form class="auth-form" @submit.prevent="updateUserProfile">
 
                 <div class="row mb-2">
@@ -143,7 +145,6 @@
             </div>
           </div>
         </div>
-        <!-- ToDo: Should be a molecule -->
         <div v-if="fetchedQuiz" class="quiz-details">
           <div class="button-container justify-content-evenly">
             <div class="quiz-card d-flex flex-column justify-content-center align-items-center">
@@ -191,6 +192,7 @@ export default {
         startDate: "",
         duration: 0,
       },
+      profilePicture: null,
     };
   },
   created() {
@@ -208,6 +210,22 @@ export default {
           .then((response) => {
             if (response.status === 200) {
               this.user = response.data;
+              EndpointService.getWithResponseType(`users/${this.user.id}/profile-picture`, 'blob')
+                  .then((profilePictureResponse) => {
+                    if (profilePictureResponse.status === 200) {
+                      let blob = new Blob([profilePictureResponse.data], { type: profilePictureResponse.headers['content-type'] });
+
+                      let reader = new FileReader();
+                      reader.onloadend = () => {
+                        this.profilePicture = reader.result;
+                        console.log('Profile picture loaded successfully.', this.profilePicture);
+                      };
+
+                      reader.readAsDataURL(blob);
+                    } else {
+                      console.error('Error fetching profile picture:', profilePictureResponse);
+                    }
+                  })
             } else {
               handleError("User does not exist.");
             }
@@ -232,7 +250,12 @@ export default {
         payload.password = this.user.password;
       }
 
-      EndpointService.put(`users/${this.user.id}`, payload)
+      const data = {
+        file: this.profilePicture,
+        user: payload,
+      };
+
+      EndpointService.put(`users/${this.user.id}`, data)
           .then(response => {
             console.log(this.user)
             if (response.status === 200) {
@@ -355,6 +378,16 @@ export default {
       }
 
       return true;
+    },
+    handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.profilePicture = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
     },
   },
 };

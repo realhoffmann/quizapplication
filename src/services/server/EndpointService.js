@@ -18,6 +18,16 @@ export default {
     },
 
     /**
+     * Get data from the API with a specified response type
+     */
+    getWithResponseType(endpoint, responseType) {
+        return axios
+            .get(`${BASE_URL}/${endpoint}`,
+                {'headers': this.getAuthHeader(),
+                'responseType': responseType }
+            );
+    },
+    /**
      * Post data to the API
      */
     post(endpoint, data) {
@@ -47,5 +57,5 @@ export default {
      */
     getAuthHeader() {
         return {"Authorization": "Bearer " + (localStorage.getItem("auth_token") || null)};
-    }
+    },
 };
