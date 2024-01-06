@@ -1,15 +1,23 @@
 import EndpointService from "@/services/server/EndpointService";
 import {handleError, handleSuccess} from "@/services/MessageHandlerService";
 import {useAppStore} from "@/services/store/appStore";
+import registrationSchema from "@/services/schema/RegistrationSchemaService";
 
 /**
  * Register a new user.
  */
 export async function registerUser(user, confirmPassword) {
     try {
-        if (user.password !== confirmPassword) {
-            console.error("Passwords do not match, password: " + user.password + ", confirmPassword: " + user.confirmPassword + ".");
-            handleError("Passwords do not match");
+        console.info("Validating user registration data: " + JSON.stringify(user));
+
+        try {
+            await registrationSchema.validate({ ...user, confirmPassword }, { abortEarly: false });
+            console.info("User registration data is valid");
+        } catch (error) {
+            console.error("Validation failed: " + error);
+            error.inner.forEach((e) => {
+                handleError(e.message);
+            });
             return false;
         }
 

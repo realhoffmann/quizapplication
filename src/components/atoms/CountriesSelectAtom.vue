@@ -1,5 +1,5 @@
 <template>
-  <select class="form-control" v-model="selectedCountry">
+  <select class="form-control" v-model="selectedCountry" required>
     <option v-for="country in countries" :key="country.code" :value="country.code">{{ country.name }}</option>
   </select>
 </template>
