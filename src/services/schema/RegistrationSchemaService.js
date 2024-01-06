@@ -1,5 +1,18 @@
 import * as Yup from 'yup';
 
+/**
+ * Registration Schema Validation using Yup.
+ *
+ * @see services/user/UserRegisterService.js
+ * @property {string} salutation - The Salutation must not be empty.
+ * @property {string} otherSalutationDetail - The other salutation detail must not be empty if the salutation is OTHER.
+ * @property {string} firstName - The first name must not be empty.
+ * @property {string} lastName - The last name must not be empty.
+ * @property {string} email - The email must not be empty and must be a valid email.
+ * @property {string} password - The password must not be empty and must be at least 8 characters long.
+ * @property {string} confirmPassword - The confirm password must not be empty and must match the password.
+ * @property {string} country - The country must not be empty.
+ */
 const registrationSchema = Yup.object().shape({
     salutation: Yup.string().required('Salutation is required').nullable(),
     otherSalutationDetail: Yup.string()
