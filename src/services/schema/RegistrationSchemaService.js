@@ -31,7 +31,13 @@ const registrationSchema = Yup.object().shape({
     firstName: Yup.string().required('First name is required').min(2, 'First Name is too Short!').max(20, 'First Name is too Long!'),
     lastName: Yup.string().required('Last name is required').min(2, 'Last Name is too Short!').max(20, 'Last Name is too Long!'),
     email: Yup.string().required('Email is required').email('Invalid email'),
-    password: Yup.string().required('Password is required').min(8, 'Password must be at least 8 characters long'),
+    password: Yup.string()
+        .required('Password is required')
+        .min(12, 'Password must be at least 12 characters long')
+        .matches(
+            /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).*$/,
+            'Password must contain at least one number, one lowercase letter, one uppercase letter, and one symbol (@#$%^&+=!)'
+        ),
     confirmPassword: Yup.string()
         .required('Confirm password is required')
         .test({

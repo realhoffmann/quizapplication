@@ -78,10 +78,11 @@
                   <label class="form-label" for="country">Country</label>
                   <select v-model="user.country" class="form-control" id="country">
                     <option value="AT">Austria</option>
+                    <option value="DE">Germany</option>
+                    <option value="CH">Switzerland</option>
                     <option value="BE">Belgium</option>
                     <option value="BG">Bulgaria</option>
                     <option value="DK">Denmark</option>
-                    <option value="DE">Germany</option>
                     <option value="EE">Estonia</option>
                     <option value="FI">Finland</option>
                     <option value="FR">France</option>
