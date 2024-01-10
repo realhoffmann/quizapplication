@@ -171,6 +171,7 @@ import {useAppStore} from "@/services/store/appStore";
 
 export default {
   name: "UserView",
+  props: ["userId"],
   data() {
     return {
       searchQuery: "",
@@ -207,7 +208,9 @@ export default {
       const store = useAppStore();
       store.checkAuthState();
       const tokenUser = getUserFromToken(localStorage.getItem("auth_token"));
-      EndpointService.get(`users/${tokenUser.id}`)
+      const userId = this.userId ? this.userId : tokenUser.id;
+
+      EndpointService.get(`users/${userId}`)
           .then((response) => {
             if (response.status === 200) {
               this.user = response.data;
@@ -226,8 +229,10 @@ export default {
                     } else {
                       console.error('Error fetching profile picture:', profilePictureResponse);
                     }
-                  })
-            } else {
+                  }).catch((error) => {
+                    console.error('Error fetching profile picture:', error);
+                });
+              } else {
               handleError("User does not exist.");
             }
           })

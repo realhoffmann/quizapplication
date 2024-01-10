@@ -164,6 +164,7 @@
 <script>
 import EndpointService from "@/services/server/EndpointService";
 import {handleError, handleSuccess} from "@/services/MessageHandlerService";
+import router from "@/router";
 
 export default {
   data() {
@@ -194,7 +195,7 @@ export default {
       if (this.searchFor === 'quiz') {
         this.searchQuiz();
       } else if (this.searchFor === 'user') {
-        this.searchUser();
+        router.push({name: 'listUsers'});
       }
     },
     searchQuiz() {
@@ -225,21 +226,6 @@ export default {
           .catch(error => {
             console.error('Error while deleting quiz:', error);
             handleError('An error occurred while deleting the quiz.');
-          });
-    },
-    searchUser() {
-      EndpointService.get(`users/${(this.searchQuery)}`)
-          .then(response => {
-            if (response.status === 200) {
-              this.fetchedUser = response.data;
-              console.log(this.fetchedUser);
-            } else {
-              handleError("User does not exist.");
-            }
-          })
-          .catch(error => {
-            console.error("Error while fetching user:", error);
-            handleError("User does not exist.");
           });
     },
 

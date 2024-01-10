@@ -16,6 +16,7 @@ import ImprintView from '../views/info/ImprintView.vue'
 import ContactView from '../views/info/ContactView.vue'
 import UserView from '../views/user/UserView.vue'
 import AdminView from '../views/user/AdminView.vue'
+import ListUserView from "@/views/user/ListUserView.vue";
 
 
 const routes = [
@@ -103,9 +104,10 @@ const routes = [
     component: ContactView
   },
   {
-    path: '/user',
+    path: '/user/:userId',
     name: 'user',
     component: UserView,
+    props: true,
     meta: { requiresAuth: true },
   },
   {
@@ -114,10 +116,16 @@ const routes = [
     component: AdminView,
     meta: { requiresAuth: true, requiresAdmin: true},
   },
-   {
+  {
+    path: '/listUsers',
+    name: 'listUsers',
+    component: ListUserView,
+    meta: {requiresAuth: true, requiresAdmin: true},
+  },
+  {
        path: '/:pathMatch(.*)*',
        redirect: {name: 'home'}
-   }
+  }
 ]
 
 const router = createRouter({
