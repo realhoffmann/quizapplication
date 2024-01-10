@@ -34,14 +34,14 @@
             <!-- Date Input -->
             <div class="mb-3">
               <label for="editQuizDate" class="form-label">Select Start Date</label>
-              <input type="date" class="form-control" id="editQuizDate" v-model="fetchedQuiz.editQuizDate">
+              <input type="date" class="form-control" id="editQuizDate" v-model="quizToEdit.editQuizDate">
             </div>
 
             <!-- Duration Input -->
             <div class="mb-3">
               <label for="editQuizDuration" class="form-label">Enter Duration (in days)</label>
               <input type="number" class="form-control" id="editQuizDuration"
-                     v-model="fetchedQuiz.editQuizDuration">
+                     v-model="quizToEdit.editQuizDuration">
             </div>
 
             <div class="form-actions">
@@ -168,7 +168,7 @@
             <div class="quiz-card d-flex flex-column justify-content-center align-items-center">
               {{ quiz.id }}
               <div>
-                <button class="btn quiz-button" @click="editQuiz()"> Edit</button>
+                <button class="btn quiz-button" @click="editQuiz(quiz)"> Edit</button>
                 <button class="btn delete-quiz-button" @click="deleteQuiz(quiz.id)">Delete</button>
               </div>
             </div>
@@ -200,6 +200,7 @@ export default {
       fetchedUser: null,
       showPasswordFields: false,
       editQuizVisible: false,
+      quizToEdit: null,
       updateQuizData: {
         startDate: "",
         duration: 0,
@@ -343,9 +344,10 @@ export default {
           });
       }
     },
-    editQuiz() {
+    editQuiz(quiz) {
       console.log("edit quiz");
       this.editQuizVisible = true;
+      this.quizToEdit = quiz;
       console.log("edit quiz visible: " + this.editQuizVisible);
     },
     cancelEditQuiz() {
@@ -354,10 +356,10 @@ export default {
     saveQuizChanges() {
       // Validate and save quiz changes
       if (this.validateQuiz()) {
-        const quizId = this.fetchedQuiz.id;
+        const quizId = this.quizToEdit.id;
 
-        this.updateQuizData.startDate = this.fetchedQuiz.editQuizDate;
-        this.updateQuizData.duration = this.fetchedQuiz.editQuizDuration;
+        this.updateQuizData.startDate = this.quizToEdit.editQuizDate;
+        this.updateQuizData.duration = this.quizToEdit.editQuizDuration;
 
         // Continue with your save logic...
         EndpointService.put(`quizzes/${quizId}/startDate/${this.updateQuizData.startDate}/duration/${this.updateQuizData.duration}`)
