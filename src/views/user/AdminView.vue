@@ -297,7 +297,12 @@ export default {
         payload.password = this.fetchedUser.password;
       }
 
-      EndpointService.put(`users/${this.fetchedUser.id}`, payload)
+      const data = {
+        file: null,
+        user: payload,
+      };
+
+      EndpointService.put(`users/${this.fetchedUser.id}`, data)
           .then(response => {
             if (response.status === 200) {
               handleSuccess("User has been updated successfully");
