@@ -4,6 +4,8 @@
     <div class="container d-flex justify-content-center align-items-center">
       <div class="card searchForm col-md-5" >
         <div class="card-body">
+          <button class="btn card-button" name="Search All Users" @click="searchAllUsers">Search All Users</button>
+        </div>
           <div class="admin-filter col-4 mb-3">
             <select class="form-control" v-model="searchFor">
               <option value="none">Search for: -</option>
@@ -11,6 +13,7 @@
               <option value="quiz">Search for: Quiz</option>
             </select>
           </div>
+        <div class="card-body">
           <div class="input-group">
             <input type="text" class="form-control" placeholder="Search..." aria-label="Search"
                    v-model="searchQuery">
@@ -164,7 +167,6 @@
 <script>
 import EndpointService from "@/services/server/EndpointService";
 import {handleError, handleSuccess} from "@/services/MessageHandlerService";
-import router from "@/router";
 
 export default {
   data() {
@@ -195,7 +197,7 @@ export default {
       if (this.searchFor === 'quiz') {
         this.searchQuiz();
       } else if (this.searchFor === 'user') {
-        router.push({name: 'listUsers'});
+        this.searchUser();
       }
     },
     searchQuiz() {
@@ -212,6 +214,9 @@ export default {
             console.error("Error while fetching quiz:", error);
             handleError("Quiz does not exist.");
           });
+    },
+    searchAllUsers() {
+      this.$router.push({ name: "listUsers" });
     },
     deleteQuiz(quizId) {
       EndpointService.delete(`quizzes/${quizId}`)
@@ -257,6 +262,21 @@ export default {
           .catch(error => {
             console.error('Error while updating user profile:', error);
             handleError('An error occurred while updating the user profile.');
+          });
+    },
+    searchUser() {
+      EndpointService.get(`users/${(this.searchQuery)}`)
+          .then(response => {
+            if (response.status === 200) {
+              this.fetchedUser = response.data;
+              console.log(this.fetchedUser);
+            } else {
+              handleError("User does not exist.");
+            }
+          })
+          .catch(error => {
+            console.error("Error while fetching user:", error);
+            handleError("User does not exist.");
           });
     },
     deleteUser() {
