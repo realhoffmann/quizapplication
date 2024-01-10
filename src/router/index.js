@@ -104,16 +104,16 @@ const routes = [
     component: ContactView
   },
   {
-    path: '/user/:userId',
+    path: '/user',
     name: 'user',
     component: UserView,
-    props: true,
     meta: { requiresAuth: true },
   },
   {
-    path: '/admin',
+    path: '/admin/:userId',
     name: 'admin',
     component: AdminView,
+    props: true,
     meta: { requiresAuth: true, requiresAdmin: true},
   },
   {

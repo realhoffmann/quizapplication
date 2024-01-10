@@ -38,7 +38,8 @@ export default {
       return user && user.role === "ADMIN";
     },
     userLink() {
-      return this.isAdmin ? '/Admin' : '/User';
+      const user = getUserFromToken(localStorage.getItem("auth_token"));
+      return this.isAdmin ? '/Admin/'+ user.id  : '/User';
     },
     linkText() {
       return this.isAdmin ? 'Admin' : 'Profile';

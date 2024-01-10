@@ -1,27 +1,28 @@
 <template>
-  <div class="home rankings-container">
-    <h1>Admin Dashboard</h1>
-    <div class="container d-flex justify-content-center align-items-center">
-      <div class="card searchForm col-md-5" >
-        <div class="card-body">
-          <button class="btn card-button" name="Search All Users" @click="searchAllUsers">Search All Users</button>
-        </div>
-          <div class="admin-filter col-4 mb-3">
-            <select class="form-control" v-model="searchFor">
-              <option value="none">Search for: -</option>
-              <option value="user">Search for: User</option>
-              <option value="quiz">Search for: Quiz</option>
-            </select>
+      <div class="home rankings-container">
+        <h1>Admin Dashboard</h1>
+        <div class="container d-flex justify-content-center align-items-center">
+          <div class="card searchForm col-md-5" >
+            <div class="card-body">
+              <div class="admin-filter col-4 mb-3">
+                <select class="form-control" v-model="searchFor">
+                  <option value="none">Search for: -</option>
+                  <option value="user">Search for: User</option>
+                  <option value="quiz">Search for: Quiz</option>
+                </select>
+              </div>
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search..." aria-label="Search"
+                       v-model="searchQuery">
+                <button class="btn search-button" @click="search">Search</button>
+              </div>
+                <div class="container d-flex justify-content-evenly">
+                <button class="btn update-button" name="Search All Users" @click="searchAllUsers">Search All Users</button>
+                <button class="btn update-button" name="Search All Quizzes" @click="searchAllQuizzes">Search All Quizzes</button>
+              </div>
+            </div>
           </div>
-        <div class="card-body">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search..." aria-label="Search"
-                   v-model="searchQuery">
-            <button class="btn search-button" @click="search">Search</button>
-          </div>
         </div>
-      </div>
-    </div>
 
     <div v-if="editQuizVisible">
       <div class="user-container d-flex">
@@ -138,6 +139,16 @@
                   <input type="password" class="form-control" id="confirm-password" placeholder="********" minlength="8" required>
                 </div>
               </div>
+              <!-- role of user -->
+              <div class="mb-2">
+                <label class="form-label" for="role">Role</label>
+                <select class="form-control" id="role" name="role" v-model="fetchedUser.role">
+                  <option value="none">-</option>
+                  <option value="ADMIN">Admin</option>
+                  <option value="USER">User</option>
+                </select>
+              </div>
+
             </div>
 
             <div class="form-actions">
@@ -150,17 +161,20 @@
     </div>
 
     <!-- Quiz Section -->
-    <div v-if="fetchedQuiz" class="quiz-details">
-      <div class="button-container justify-content-evenly">
-        <div class="quiz-card d-flex flex-column justify-content-center align-items-center">
-          {{ fetchedQuiz.id }}
-          <div>
-            <button class="btn quiz-button" @click="editQuiz()"> Edit</button>
-            <button class="btn delete-quiz-button" @click="deleteQuiz(fetchedQuiz.id)">Delete</button>
+
+      <div v-for="quiz in fetchedQuiz" :key="quiz.id">
+         <div v-if="quiz" class="quiz-details">
+          <div class="button-container justify-content-evenly">
+            <div class="quiz-card d-flex flex-column justify-content-center align-items-center">
+              {{ quiz.id }}
+              <div>
+                <button class="btn quiz-button" @click="editQuiz()"> Edit</button>
+                <button class="btn delete-quiz-button" @click="deleteQuiz(quiz.id)">Delete</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
   </div>
 </template>
 
@@ -169,13 +183,20 @@ import EndpointService from "@/services/server/EndpointService";
 import {handleError, handleSuccess} from "@/services/MessageHandlerService";
 
 export default {
+  name: "AdminView",
+  props: {
+    userId: {
+      type: String,
+      required: false,
+    },
+  },
   data() {
     return {
       searchFor: 'none',
       searchQuery: "",
       quiz: "",
       user: "",
-      fetchedQuiz: null,
+      fetchedQuiz: [],
       fetchedUser: null,
       showPasswordFields: false,
       editQuizVisible: false,
@@ -185,13 +206,20 @@ export default {
       },
     };
   },
+  created() {
+    if (this.userId) {
+      this.searchQuery = this.userId;
+      this.searchFor = 'user';
+      this.search();
+    }
+  },
   methods: {
     togglePasswordDropdown() {
       this.showPasswordFields = !this.showPasswordFields;
     },
     search() {
       this.fetchedUser = null;
-      this.fetchedQuiz = null;
+      this.fetchedQuiz = [];
       this.editQuizVisible = false;
 
       if (this.searchFor === 'quiz') {
@@ -204,7 +232,7 @@ export default {
       EndpointService.get(`quizzes/${this.searchQuery}`)
           .then((response) => {
             if (response.status === 200) {
-              this.fetchedQuiz = response.data;
+              this.fetchedQuiz = [response.data];
               console.log(this.fetchedQuiz);
             } else {
               handleError("Quiz does not exist.");
@@ -217,6 +245,25 @@ export default {
     },
     searchAllUsers() {
       this.$router.push({ name: "listUsers" });
+    },
+    searchAllQuizzes() {
+      this.fetchedUser = null;
+      this.fetchedQuiz = [];
+      this.editQuizVisible = false;
+
+      EndpointService.get(`quizzes/all`)
+          .then((response) => {
+            if (response.status === 200) {
+              this.searchFor = 'quiz';
+              for (let i = 0; i < response.data.length; i++) {
+                this.fetchedQuiz.push(response.data[i]);
+              }
+            }
+          })
+          .catch((error) => {
+            console.error("Error while fetching quizzes by category:", error);
+            handleError("An error occurred while fetching quizzes ");
+          });
     },
     deleteQuiz(quizId) {
       EndpointService.delete(`quizzes/${quizId}`)

@@ -171,7 +171,6 @@ import {useAppStore} from "@/services/store/appStore";
 
 export default {
   name: "UserView",
-  props: ["userId"],
   data() {
     return {
       searchQuery: "",
@@ -208,9 +207,8 @@ export default {
       const store = useAppStore();
       store.checkAuthState();
       const tokenUser = getUserFromToken(localStorage.getItem("auth_token"));
-      const userId = this.userId ? this.userId : tokenUser.id;
 
-      EndpointService.get(`users/${userId}`)
+      EndpointService.get(`users/${tokenUser.id}`)
           .then((response) => {
             if (response.status === 200) {
               this.user = response.data;

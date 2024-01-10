@@ -53,7 +53,7 @@ export default {
   },
   methods: {
     goToUserView(userId) {
-      this.$router.push({ name: "user", params: { userId: userId } });
+      this.$router.push({ name: "admin", params: { userId: userId } });
     },
     loadUserIds() {
       EndpointService.get("users/all")
