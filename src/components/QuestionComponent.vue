@@ -2,22 +2,22 @@
   <div class="d-flex justify-content-center align-items-center">
     <div class="card question">
       <div class="card-body">
-        <div class="timer-bar" :style="{ width: timerWidth }"></div>
+        <div class="timer-bar" :style="{ width: timerWidth }" role="progressbar"></div>
         <h3>{{ question }}</h3>
       </div>
     </div>
   </div>
 
   <div class="button-container justify-content-center">
-    <button class="answer-button answerA" @click="checkAnswer(answerA)">{{ Object.keys(answerA).length === 0 ? '' :
+    <button class="answer-button answerA" :aria-label="'Answer A'" @click="checkAnswer(answerA)">{{ Object.keys(answerA).length === 0 ? '' :
       answerA.answer.answer }}</button>
-    <button class="answer-button answerB" @click="checkAnswer(answerB)">{{ Object.keys(answerB).length === 0 ? '' :
+    <button class="answer-button answerB" :aria-label="'Answer B'" @click="checkAnswer(answerB)">{{ Object.keys(answerB).length === 0 ? '' :
       answerB.answer.answer }}</button>
   </div>
   <div class="button-container justify-content-center">
-    <button class="answer-button answerC" @click="checkAnswer(answerC)">{{ Object.keys(answerC).length === 0 ? '' :
+    <button class="answer-button answerC" :aria-label="'Answer C'" @click="checkAnswer(answerC)">{{ Object.keys(answerC).length === 0 ? '' :
       answerC.answer.answer }}</button>
-    <button class="answer-button answerD" @click="checkAnswer(answerD)">{{ Object.keys(answerD).length === 0 ? '' :
+    <button class="answer-button answerD" :aria-label="'Answer D'" @click="checkAnswer(answerD)">{{ Object.keys(answerD).length === 0 ? '' :
       answerD.answer.answer }}</button>
   </div>
 </template>

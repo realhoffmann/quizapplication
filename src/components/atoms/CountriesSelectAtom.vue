@@ -1,8 +1,13 @@
+
 <template>
-  <select class="form-control" v-model="selectedCountry" required>
-    <option v-for="country in countries" :key="country.code" :value="country.code">{{ country.name }}</option>
-  </select>
+  <div>
+    <select id="country-selector" class="form-control" v-model="selectedCountry" required>
+      <option disabled value="none">-- Choose a country --</option>
+      <option v-for="country in countries" :key="country.code" :value="country.code">{{ country.name }}</option>
+    </select>
+  </div>
 </template>
+
 
 <script>
 export default {

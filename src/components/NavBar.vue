@@ -1,19 +1,20 @@
+
 <template>
-  <nav class="navbar navbar-expand-lg bg-light">
+  <nav class="navbar navbar-expand-lg bg-light" aria-label="Main navigation">
     <div class="container-fluid">
-      <router-link to="/">
-        <a class="navbar-brand">
-          <img src="../assets/logo.png" width="60" height="60" alt="? ">
-        </a>
+      <router-link to="/" class="navbar-brand">
+        <img src="../assets/logo.png" width="60" height="60" alt="QuizApp Logo">
       </router-link>
-      <button class="navbar-toggler" type="button" @click="toggleNavbar">
+
+      <button class="navbar-toggler" type="button" @click="toggleNavbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+
       <div class="collapse navbar-collapse justify-content-evenly text-center" :class="{ 'show': isNavbarOpen }" id="navbarSupportedContent">
-        <div><router-link to="/">Home</router-link></div>
-        <div v-if="loggedIn" ><router-link :to="userLink">{{ linkText }}</router-link></div>
-        <div><router-link to="/login" @click="login">{{ loggedIn ? 'Logout' : 'Login' }}</router-link></div>
-        <div><router-link to="/about">About</router-link></div>
+        <div><router-link to="/" class="nav-item">Home</router-link></div>
+        <div><router-link v-if="loggedIn" :to="userLink" class="nav-item">{{ linkText }}</router-link></div>
+        <div><router-link to="/login" class="nav-item" @click="login">{{ loggedIn ? 'Logout' : 'Login' }}</router-link></div>
+        <div><router-link to="/about" class="nav-item">About</router-link></div>
       </div>
     </div>
   </nav>

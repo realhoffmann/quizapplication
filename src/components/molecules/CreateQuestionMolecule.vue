@@ -20,21 +20,21 @@
    <!-- TODO: each answerOption will be refactored to AnswerOptionAtom.vue -->
   <div class="button-container justify-content-center">
     <div class="answer-option answerA">
-      <textarea class="form-control-answer" v-model="answers.A.text" placeholder="Answer a)" required></textarea>
+      <textarea class="form-control-answer" :aria-label="'Answer A'" v-model="answers.A.text" placeholder="Answer a)" required></textarea>
       <input class="checkbox" type="checkbox" v-model="answers.A.isCorrect">
     </div>
     <div class="answer-option answerB">
-      <textarea class="form-control-answer" v-model="answers.B.text" placeholder="Answer b)" required></textarea>
+      <textarea class="form-control-answer" :aria-label="'Answer B'" v-model="answers.B.text" placeholder="Answer b)" required></textarea>
       <input class="checkbox" type="checkbox" v-model="answers.B.isCorrect">
     </div>
   </div>
   <div class="button-container justify-content-center">
     <div class="answer-option answerC">
-      <textarea class="form-control-answer" v-model="answers.C.text" placeholder="Answer c)" required></textarea>
+      <textarea class="form-control-answer" :aria-label="'Answer C'" v-model="answers.C.text" placeholder="Answer c)" required></textarea>
       <input class="checkbox" type="checkbox" v-model="answers.C.isCorrect">
     </div>
     <div class="answer-option answerD">
-      <textarea class="form-control-answer" v-model="answers.D.text" placeholder="Answer d)" required></textarea>
+      <textarea class="form-control-answer" :aria-label="'Answer D'" v-model="answers.D.text" placeholder="Answer d)" required></textarea>
       <input class="checkbox" type="checkbox" v-model="answers.D.isCorrect">
     </div>
   </div>

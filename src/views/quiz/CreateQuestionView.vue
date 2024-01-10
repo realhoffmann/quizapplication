@@ -6,8 +6,8 @@
     <div v-for="index in questionComponentsCount" :key="index">
       <CreateQuestionMolecule ref="questionComponents" />
     </div>
-    <button class="new-question-button" @click="addQuestion">Add Question</button>
-    <button class="new-question-button" @click="submit">Submit Quiz</button>
+    <button class="new-question-button" :aria-label="'Add Question'" @click="addQuestion">Add Question</button>
+    <button class="new-question-button" :aria-label="'Submit Quiz'" @click="submit">Submit Quiz</button>
   </div>
 </template>
 
