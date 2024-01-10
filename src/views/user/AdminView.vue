@@ -95,12 +95,12 @@
             <div>
               <label class="form-label" for="country">Country</label>
               <select class="form-control" id="country" name="country" v-model="fetchedUser.country">
-                <option value="none">-</option>
                 <option value="AT">Austria</option>
+                <option value="DE">Germany</option>
+                <option value="CH">Switzerland</option>
                 <option value="BE">Belgium</option>
                 <option value="BG">Bulgaria</option>
                 <option value="DK">Denmark</option>
-                <option value="DE">Germany</option>
                 <option value="EE">Estonia</option>
                 <option value="FI">Finland</option>
                 <option value="FR">France</option>
