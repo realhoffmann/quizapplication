@@ -9,13 +9,11 @@
                 <h1 class="auth-title">Edit Quiz</h1>
               </div>
               <form class="auth-form" @submit.prevent="saveQuizChanges">
-                <!-- Date Input -->
                 <div class="mb-2">
                   <label for="editQuizDate" class="form-label">Select Start Date</label>
                   <input type="date" class="form-control" id="editQuizDate" v-model="fetchedQuiz.editQuizDate">
                 </div>
 
-                <!-- Duration Input -->
                 <div class="mb-2">
                   <label for="editQuizDuration" class="form-label">Enter Duration (in days)</label>
                   <input type="number" class="form-control" id="editQuizDuration"
@@ -144,15 +142,29 @@
                      aria-label="Search for quizzes" v-model="searchQuery">
               <button class="btn search-button" @click="searchQuiz">Search</button>
             </div>
+            <button class="btn update-button" name="Search All Quizzes" @click="searchAllQuizzes">Search All Quizzes</button>
           </div>
         </div>
-        <div v-if="fetchedQuiz" class="quiz-details">
-          <div class="button-container justify-content-evenly">
-            <div class="quiz-card d-flex flex-column justify-content-center align-items-center">
-              {{ fetchedQuiz.id }}
-              <div>
-                <button class="btn quiz-button" @click="editQuiz()"> Edit</button>
-                <button class="btn delete-quiz-button" @click="deleteQuiz(fetchedQuiz.id)">Delete</button>
+        <div v-if="fetchedQuiz">
+          <div class="quiz-details">
+            <div class="button-container justify-content-evenly">
+              <div v-if="Array.isArray(fetchedQuiz)">
+                <div v-for="quiz in fetchedQuiz" :key="quiz.id" class="quiz-card d-flex flex-column justify-content-center align-items-center">
+                  {{ quiz.id }}
+                  <div>
+                    <button class="btn quiz-button" @click="editQuiz(quiz)"> Edit</button>
+                    <button class="btn delete-quiz-button" @click="deleteQuiz(quiz.id)">Delete</button>
+                  </div>
+                </div>
+              </div>
+              <div v-else>
+                <div class="quiz-card d-flex flex-column justify-content-center align-items-center">
+                  {{ fetchedQuiz.id }}
+                  <div>
+                    <button class="btn quiz-button" @click="editQuiz(fetchedQuiz)"> Edit</button>
+                    <button class="btn delete-quiz-button" @click="deleteQuiz(fetchedQuiz.id)">Delete</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -161,6 +173,10 @@
     </div>
   </div>
 </template>
+
+
+
+
 
 <script>
 import * as HandlerService from "@/services/MessageHandlerService";
@@ -175,8 +191,8 @@ export default {
     return {
       searchQuery: "",
       quiz: "",
+      fetchedQuiz: [],
       showPasswordFields: false,
-      fetchedQuiz: null,
       user: {
         id: null,
         salutation: "",
@@ -313,6 +329,26 @@ export default {
             handleError("Quiz not found.");
           });
     },
+    searchAllQuizzes() {
+      this.fetchedQuiz = null;
+      this.editQuizVisible = false;
+
+      EndpointService.get(`quizzes/all/creator/${this.user.id}`)
+          .then((response) => {
+            if (response.status === 200) {
+              this.fetchedQuiz = response.data;
+              console.log(this.fetchedQuiz);
+            } else {
+              handleError("Failed to fetch all quizzes.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error while fetching all quizzes:", error);
+            handleError("Failed to fetch all quizzes.");
+          });
+    },
+
+
     deleteQuiz(quizId) {
       EndpointService.delete(`quizzes/${quizId}`)
           .then(response => {
@@ -328,16 +364,17 @@ export default {
             handleError('An error occurred while deleting the quiz.');
           });
     },
-    editQuiz() {
+    editQuiz(quiz) {
+      this.fetchedQuiz = quiz;
       console.log("edit quiz");
       this.editQuizVisible = true;
       console.log("edit quiz visible: " + this.editQuizVisible);
     },
+
     cancelEditQuiz() {
       this.editQuizVisible = false;
     },
     saveQuizChanges() {
-      // Validate and save quiz changes
       if (this.validateQuiz()) {
         const quizId = this.fetchedQuiz.id;
 
