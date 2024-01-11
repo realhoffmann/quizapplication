@@ -1,10 +1,15 @@
 <template>
   <div class="home">
     <h1>Users</h1>
-    <div class="input-group">
-      <input type="text" class="form-control" placeholder="Search for users" aria-label="Search for users"
-             v-model="searchQuery">
-      <button class="btn search-button" @click="searchUsers">Search</button>
+    <div class="container d-flex justify-content-center align-items-center">
+      <div class="card searchForm col-md-5">
+        <div class="card-body">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search for users" aria-label="Search for users" v-model="searchQuery">
+            <button class="btn search-button" @click="searchUsers">Search</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="button-container justify-content-evenly">
