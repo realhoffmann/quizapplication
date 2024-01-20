@@ -6,7 +6,7 @@
     <div class="home">
       <h1>Select a Quiz</h1>
     </div>
-    <div class="button-container justify-content-evenly">
+    <div class="rankings-container justify-content-evenly">
       <div v-for="quizId in quizIdsArray" :key="quizId">
         <button class="category-button" @click="showQuizEntryView(quizId)" :class="{ 'expired': isQuizExpired(quizId) }"
           :style="getButtonStyle(quizStartDates[quizId], quizDurations[quizId])"

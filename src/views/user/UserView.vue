@@ -339,12 +339,12 @@ export default {
               this.fetchedQuiz = response.data;
               console.log(this.fetchedQuiz);
             } else {
-              handleError("Failed to fetch all quizzes.");
+              handleError("No quizzes found.");
             }
           })
           .catch((error) => {
             console.error("Error while fetching all quizzes:", error);
-            handleError("Failed to fetch all quizzes.");
+            handleError("No quizzes found.");
           });
     },
 
