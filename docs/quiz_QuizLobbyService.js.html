@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: quiz/QuizLobbyService.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: quiz/QuizLobbyService.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { calculateQuizAvailability } from "@/services/QuizAvailabilityService";
+import EndpointService from "@/services/server/EndpointService";
+
+/**
+ * Load quiz start dates for an array of quiz IDs.
+ *
+ * @param {Array} quizIdsArray - An array of quiz IDs.
+ * @returns {Object} An object containing quiz start dates.
+ */
+export async function loadQuizStartDates(quizIdsArray) {
+    const quizStartDates = {};
+
+    for (const quizId of quizIdsArray) {
+        try {
+            const response = await EndpointService.get(`quizzes/${quizId}`);
+            console.log("Response: ", response.data);
+            quizStartDates[quizId] = calculateQuizAvailability(response.data.startDate, response.data.duration);
+        } catch (error) {
+            quizStartDates[quizId] = "Availability could not be loaded.";
+        }
+    }
+
+    return quizStartDates;
+}
+
+export async function loadQuizDurations(quizIdsArray) {
+    const quizDurations = {};
+
+    for (const quizId of quizIdsArray) {
+        try {
+            const response = await EndpointService.get(`quizzes/${quizId}`);
+            console.log("Response: ", response.data);
+            quizDurations[quizId] = response.data.duration;
+        } catch (error) {
+            quizDurations[quizId] = "Duration could not be loaded.";
+        }
+    }
+
+    return quizDurations;
+}
+
+/**
+ * Check if a quiz is expired based on its start date.
+ *
+ * @param {Object} quizStartDates - An object containing quiz start dates.
+ * @param {string} quizId - The ID of the quiz to check.
+ * @returns {boolean} True if the quiz is expired, false otherwise.
+ */
+export function isQuizExpired(quizStartDates, quizId) {
+    return quizStartDates[quizId] === "Quiz expired";
+}
+
+/**
+ * Start a quiz if it's not expired.
+ *
+ * @param {Object} router - The Vue Router instance.
+ * @param {Function} isQuizExpired - A function to check if a quiz is expired.
+ * @param {string} quizId - The ID of the quiz to start.
+ */
+export function startQuiz(router, isQuizExpired, quizId) {
+    if (!isQuizExpired(quizId)) {
+        router.push({
+            name: "quiz",
+            params: { requestId: quizId },
+        });
+    }
+}
+
+/**
+ * Get the CSS style for a button based on the progress of the quiz start date.
+ *
+ * @param {string} startDate - The formatted start date of the quiz.
+ * @param duration - The duration of the quiz.
+ * @returns {Object} An object representing the CSS style.
+ */
+export function getButtonStyle(startDate, duration) {
+    if (!startDate || startDate === "Loading...") {
+        return {};
+    }
+
+    const [days, hours] = startDate.split('/');
+    const totalHours = parseInt(days) * 24 + parseInt(hours);
+    const progress = Math.round((totalHours / (24 * duration)) * 100);
+
+    console.log("Progress: ", progress);
+
+    const greenColor = '#42b883ef';
+    const redColor = '#d80c1e';
+    const lightGrayColor = 'rgba(255, 255, 255, 0.5)';
+
+    if (progress &lt; 20) {
+        return {
+            background: `linear-gradient(to right, ${redColor} ${progress}%, ${lightGrayColor} ${progress}%)`,
+        };
+    } else {
+        return {
+            background: `linear-gradient(to right, ${greenColor} ${progress}%, ${lightGrayColor} ${progress}%)`,
+        };
+    }
+}
+
+/**
+ * Get a formatted start date to display in the button.
+ *
+ * @param {string} startDate - The formatted start date of the quiz.
+ * @returns {string} The formatted start date as a string.
+ */
+export function getFormattedStartDate(startDate) {
+    if (!startDate) {
+        return '';
+    }
+
+    if (startDate === "Loading..." || startDate === "Quiz expired") {
+        return startDate;
+    }
+
+    const [days, hours] = startDate.split('/');
+
+    if (days === '0') {
+        return `${hours} hours`;
+    } else {
+        return `${days} days ${hours} hours`;
+    }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#calculateQuizAvailability">calculateQuizAvailability</a></li><li><a href="global.html#checkAuth">checkAuth</a></li><li><a href="global.html#getButtonStyle">getButtonStyle</a></li><li><a href="global.html#getFormattedStartDate">getFormattedStartDate</a></li><li><a href="global.html#handleError">handleError</a></li><li><a href="global.html#handleSuccess">handleSuccess</a></li><li><a href="global.html#isQuizExpired">isQuizExpired</a></li><li><a href="global.html#loadQuizStartDates">loadQuizStartDates</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#registerUser">registerUser</a></li><li><a href="global.html#registrationSchema">registrationSchema</a></li><li><a href="global.html#startQuiz">startQuiz</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Jan 20 2024 22:51:57 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
