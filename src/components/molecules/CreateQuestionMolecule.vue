@@ -17,7 +17,6 @@
     </div>
   </div>
 
-   <!-- TODO: each answerOption will be refactored to AnswerOptionAtom.vue -->
   <div class="button-container justify-content-center">
     <div class="answer-option answerA">
       <textarea class="form-control-answer" :aria-label="'Answer A'" v-model="answers.A.text" placeholder="Answer a)" required></textarea>

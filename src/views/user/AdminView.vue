@@ -1,6 +1,8 @@
+<!-- Admin View -->
 <template>
       <div class="home rankings-container">
         <h1>Admin Dashboard</h1>
+        <!-- Search Form -->
         <div class="container d-flex justify-content-center align-items-center">
           <div class="card searchForm col-md-5" >
             <div class="card-body">
@@ -24,6 +26,7 @@
           </div>
         </div>
 
+    <!-- Edit Quiz Section -->
     <div v-if="editQuizVisible">
       <div class="user-container d-flex">
         <div class="user-card col-md-5">
@@ -36,7 +39,6 @@
               <label for="editQuizDate" class="form-label">Select Start Date</label>
               <input type="date" class="form-control" id="editQuizDate" v-model="quizToEdit.editQuizDate">
             </div>
-
             <!-- Duration Input -->
             <div class="mb-3">
               <label for="editQuizDuration" class="form-label">Enter Duration (in days)</label>
@@ -161,7 +163,6 @@
     </div>
 
     <!-- Quiz Section -->
-
       <div v-for="quiz in fetchedQuiz" :key="quiz.id">
          <div v-if="quiz" class="quiz-details">
           <div class="button-container justify-content-evenly">
@@ -190,6 +191,9 @@ export default {
       required: false,
     },
   },
+  /**
+   * Data properties
+   */
   data() {
     return {
       searchFor: 'none',
@@ -215,9 +219,15 @@ export default {
     }
   },
   methods: {
+    /**
+     * Toggles the password dropdown.
+     */
     togglePasswordDropdown() {
       this.showPasswordFields = !this.showPasswordFields;
     },
+    /**
+     * Handles submit of the form
+     */
     search() {
       this.fetchedUser = null;
       this.fetchedQuiz = [];
@@ -229,6 +239,9 @@ export default {
         this.searchUser();
       }
     },
+    /**
+     * Searches for quizzes.
+     */
     searchQuiz() {
       EndpointService.get(`quizzes/${this.searchQuery}`)
           .then((response) => {
@@ -244,44 +257,15 @@ export default {
             handleError("Quiz does not exist.");
           });
     },
+    /**
+     * Searches for all users.
+     */
     searchAllUsers() {
       this.$router.push({ name: "listUsers" });
     },
-    searchAllQuizzes() {
-      this.fetchedUser = null;
-      this.fetchedQuiz = [];
-      this.editQuizVisible = false;
-
-      EndpointService.get(`quizzes/all`)
-          .then((response) => {
-            if (response.status === 200) {
-              this.searchFor = 'quiz';
-              for (let i = 0; i < response.data.length; i++) {
-                this.fetchedQuiz.push(response.data[i]);
-              }
-            }
-          })
-          .catch((error) => {
-            console.error("Error while fetching quizzes by category:", error);
-            handleError("An error occurred while fetching quizzes ");
-          });
-    },
-    deleteQuiz(quizId) {
-      EndpointService.delete(`quizzes/${quizId}`)
-          .then(response => {
-            if (response.status === 200 || response.status === 204) {
-              console.log('Quiz deleted successfully');
-              handleSuccess("Quiz deleted successfully");
-            } else {
-              handleError('Failed to delete quiz.');
-            }
-          })
-          .catch(error => {
-            console.error('Error while deleting quiz:', error);
-            handleError('An error occurred while deleting the quiz.');
-          });
-    },
-
+    /**
+     * Updates the user profile.
+     */
     updateUserProfile() {
       if (this.fetchedUser.password !== this.fetchedUser.confirmPassword) {
         handleError('Passwords do not match.');
@@ -317,6 +301,9 @@ export default {
             handleError('An error occurred while updating the user profile.');
           });
     },
+    /**
+     * Searches for user by ID.
+     */
     searchUser() {
       EndpointService.get(`users/${(this.searchQuery)}`)
           .then(response => {
@@ -332,41 +319,91 @@ export default {
             handleError("User does not exist.");
           });
     },
+    /**
+     * Deletes the user.
+     */
     deleteUser() {
       if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
-      EndpointService.delete(`users/${this.fetchedUser.id}`)
+        EndpointService.delete(`users/${this.fetchedUser.id}`)
+            .then(response => {
+              if (response.status === 200 || response.status === 204) {
+                handleSuccess("User has been deleted");
+                console.log('User deleted successfully');
+              } else {
+                handleError('Failed to delete user.');
+              }
+            })
+            .catch(error => {
+              console.error('Error while deleting user:', error);
+              handleError('An error occurred while deleting the user.');
+            });
+      }
+    },
+    /**
+     * Searches for all quizzes.
+     */
+    searchAllQuizzes() {
+      this.fetchedUser = null;
+      this.fetchedQuiz = [];
+      this.editQuizVisible = false;
+
+      EndpointService.get(`quizzes/all`)
+          .then((response) => {
+            if (response.status === 200) {
+              this.searchFor = 'quiz';
+              for (let i = 0; i < response.data.length; i++) {
+                this.fetchedQuiz.push(response.data[i]);
+              }
+            }
+          })
+          .catch((error) => {
+            console.error("Error while fetching quizzes by category:", error);
+            handleError("An error occurred while fetching quizzes ");
+          });
+    },
+    /**
+     * Deletes quiz.
+     */
+    deleteQuiz(quizId) {
+      EndpointService.delete(`quizzes/${quizId}`)
           .then(response => {
             if (response.status === 200 || response.status === 204) {
-              handleSuccess("User has been deleted");
-              console.log('User deleted successfully');
+              console.log('Quiz deleted successfully');
+              handleSuccess("Quiz deleted successfully");
             } else {
-              handleError('Failed to delete user.');
+              handleError('Failed to delete quiz.');
             }
           })
           .catch(error => {
-            console.error('Error while deleting user:', error);
-            handleError('An error occurred while deleting the user.');
+            console.error('Error while deleting quiz:', error);
+            handleError('An error occurred while deleting the quiz.');
           });
-      }
     },
+    /**
+     * Edits quiz.
+     */
     editQuiz(quiz) {
       console.log("edit quiz");
       this.editQuizVisible = true;
       this.quizToEdit = quiz;
       console.log("edit quiz visible: " + this.editQuizVisible);
     },
+    /**
+     * Cancels editing quiz.
+     */
     cancelEditQuiz() {
       this.editQuizVisible = false;
     },
+    /**
+     * Saves quiz changes.
+     */
     saveQuizChanges() {
-      // Validate and save quiz changes
       if (this.validateQuiz()) {
         const quizId = this.quizToEdit.id;
 
         this.updateQuizData.startDate = this.quizToEdit.editQuizDate;
         this.updateQuizData.duration = this.quizToEdit.editQuizDuration;
 
-        // Continue with your save logic...
         EndpointService.put(`quizzes/${quizId}/startDate/${this.updateQuizData.startDate}/duration/${this.updateQuizData.duration}`)
 
             .then((response) => {
@@ -384,7 +421,9 @@ export default {
             });
       }
     },
-
+    /**
+     * Validates quiz.
+     */
     validateQuiz() {
       if (this.fetchedQuiz.editQuizDate === "") {
         handleError("Please select a date");

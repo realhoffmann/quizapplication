@@ -1,3 +1,4 @@
+<!-- SearchQuizView -->
 <template>
   <div class="container d-flex justify-content-center align-items-center">
     <div class="card searchForm">
@@ -28,6 +29,9 @@ export default {
     };
   },
   methods: {
+    /**
+     * Searches for a quiz with the given id.
+     */
     searchQuiz() {
       EndpointService.get(`quizzes/${this.searchQuery}`)
         .then((response) => {
@@ -48,6 +52,9 @@ export default {
           handleError("An error occurred while fetching the quiz.");
         });
     },
+    /**
+     * Searches for a quiz with the given Category.
+     */
     handleCategoryClicked(category) {
       EndpointService.get(`quizzes/categories/${category.toUpperCase()}`)
         .then((response) => {

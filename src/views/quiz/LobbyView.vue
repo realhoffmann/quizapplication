@@ -1,4 +1,6 @@
+<!-- LobbyView -->
 <template>
+  <!-- QuizEntryMolecule -->
   <div v-if="showQuizEntry">
     <QuizEntryMolecule @start-quiz="startQuiz" />
   </div>
@@ -6,7 +8,7 @@
     <div class="home">
       <h1>Select a Quiz</h1>
     </div>
-    <div class="button-container justify-content-evenly">
+    <div class="rankings-container justify-content-evenly">
       <div v-for="quizId in quizIdsArray" :key="quizId">
         <button class="category-button" @click="showQuizEntryView(quizId)" :class="{ 'expired': isQuizExpired(quizId) }"
           :style="getButtonStyle(quizStartDates[quizId], quizDurations[quizId])"
@@ -58,6 +60,9 @@ export default {
     }
   },
   methods: {
+    /**
+     * Loads the quiz start dates.
+     */
     async loadQuizStartDates() {
       this.quizStartDates = loadQuizStartDates(this.quizIdsArray).then((result) => {
         this.quizStartDates = result;
@@ -65,6 +70,9 @@ export default {
         console.log(error);
       });
     },
+    /**
+     * Loads the quiz durations.
+     */
     async loadQuizDurations() {
       this.quizDurations = loadQuizDurations(this.quizIdsArray).then((result) => {
         this.quizDurations = result;
@@ -73,25 +81,37 @@ export default {
         console.log(error);
       });
     },
-
+    /**
+     * Checks if the quiz with the given id is expired.
+     */
     isQuizExpired(quizId) {
       return isQuizExpired(this.quizStartDates, quizId);
     },
+    /**
+     * Shows the quiz entry view.
+     */
     showQuizEntryView(quizId) {
       this.selectedQuizId = quizId;
       this.showQuizEntry = true;
     },
+    /**
+     * Starts the quiz.
+     */
     startQuiz(nickname) {
       this.showQuizEntry = false;
       const store = useAppStore();
       store.setNickname(nickname);
       startQuiz(this.$router, this.isQuizExpired, this.selectedQuizId);
     },
-
+    /**
+     * Returns the button style.
+     */
     getButtonStyle(startDate, duration) {
       return getButtonStyle(startDate, duration);
     },
-
+    /**
+     * Returns the formatted start date.
+     */
     getFormattedStartDate(startDate) {
       console.log("getFormattedStartDate: " + startDate);
       return getFormattedStartDate(startDate);

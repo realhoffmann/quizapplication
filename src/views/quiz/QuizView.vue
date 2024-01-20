@@ -1,10 +1,13 @@
+<!-- QuizView -->
 <template>
   <div class="home">
     <h1>Let's Play!</h1>
   </div>
+  <!-- Points Badge-->
   <div class="points">
     <p class="badge rounded-pill">{{ points }} Points</p>
   </div>
+  <!-- Quiz -->
   <div v-if="quizData !== null">
     <div :key="currentQuestion.id">
       <QuestionComponent :question="currentQuestion.question"
@@ -39,11 +42,17 @@ export default {
     };
   },
   computed: {
+    /**
+     * Returns the current question.
+     */
     currentQuestion() {
       return this.quizData.questions[this.currentQuestionIndex];
     },
   },
   methods: {
+    /**
+     * Searches for a quiz with the given id and calls the startTimer function.
+     */
     searchQuiz(quizId) {
       this.quizStartTime = Date.now();
       EndpointService.get(`quizzes/${quizId}`)
@@ -56,6 +65,9 @@ export default {
           this.quizData = { questions: [] };
         });
     },
+    /**
+     * Navigates to the next question.
+     */
     nextQuestion() {
       if (this.currentQuestionIndex < this.quizData.questions.length - 1) {
         this.currentQuestionIndex++;
@@ -102,6 +114,9 @@ export default {
         }, 1000);
       }
     },
+    /**
+     * Starts the timer.
+     */
     startTimer() {
       this.timerInterval = setInterval(() => {
         if (this.timer > 0) {
@@ -111,11 +126,17 @@ export default {
         }
       }, 1000);
     },
+    /**
+     * Resets the timer.
+     */
     resetTimer() {
       clearInterval(this.timerInterval);
       this.timer = 15;
       this.startTimer();
     },
+    /**
+     * Handles the answer clicked event.
+     */
     handleAnswerClicked(answerInfo) {
       console.log(answerInfo);
       if (answerInfo.isCorrect) {
