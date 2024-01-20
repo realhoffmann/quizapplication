@@ -1,7 +1,9 @@
+<!-- User View -->
 <template>
   <div class="container">
     <div class="row">
       <div class="col-md-8">
+        <!-- Edit Quiz Section -->
         <div v-if="editQuizVisible" class="col-md-8">
           <div class="user-container">
             <div class="user-card">
@@ -29,6 +31,7 @@
           </div>
         </div>
 
+        <!-- User Profile Section -->
         <div v-else-if="user.firstName">
           <div class="user-container">
             <div class="user-card">
@@ -134,6 +137,7 @@
         </div>
       </div>
 
+      <!-- Search Quiz Section -->
       <div class="col-md-4 search-bar">
         <div class="card">
           <div class="card-body">
@@ -174,10 +178,7 @@
   </div>
 </template>
 
-
-
-
-
+<!-- User View Logic-->
 <script>
 import * as HandlerService from "@/services/MessageHandlerService";
 import {handleError, handleSuccess} from "@/services/MessageHandlerService";
@@ -187,6 +188,9 @@ import {useAppStore} from "@/services/store/appStore";
 
 export default {
   name: "UserView",
+  /**
+   * Data properties
+   */
   data() {
     return {
       searchQuery: "",
@@ -212,13 +216,24 @@ export default {
       profilePicture: null,
     };
   },
+  /**
+   * Lifecycle hook for when the component is created.
+   * Loads the user data and initializes the component state.
+   */
   created() {
     this.loadUserData();
   },
   methods: {
+    /**
+     * Toggles the visibility of password fields in the UI.
+     */
     togglePasswordDropdown() {
       this.showPasswordFields = !this.showPasswordFields;
     },
+    /**
+     * Loads user data from the server.
+     * Fetches data based on the authenticated user's token.
+     */
     loadUserData() {
       const store = useAppStore();
       store.checkAuthState();
@@ -255,6 +270,10 @@ export default {
             handleError("An error occurred while fetching the user.");
           });
     },
+    /**
+     * Handles the submission of the user profile form.
+     * Validates and updates the user's profile information.
+     */
     updateUserProfile() {
       if (this.user.password !== this.user.confirmPassword) {
         handleError("Passwords do not match.");
@@ -290,6 +309,10 @@ export default {
             handleError("An error occurred while updating the profile.");
           });
     },
+    /**
+     * Handles the deletion of the user's account.
+     * Prompts the user for confirmation before deleting the account.
+     */
     deleteAccount() {
       if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
         EndpointService.delete(`users/${this.user.id}`)
@@ -307,6 +330,10 @@ export default {
             });
       }
     },
+    /**
+     * Logs the user out of the application.
+     * Clears the authentication token and redirects the user to the home view.
+     */
     logout() {
       const store = useAppStore();
       store.logOut();
@@ -314,6 +341,10 @@ export default {
         name: "home",
       });
     },
+    /**
+     * Searches for a quiz based on the quiz ID.
+     * Fetches the quiz from the server and displays it in the UI.
+     */
     searchQuiz() {
       EndpointService.get(`quizzes/${this.searchQuery}/creator/${this.user.id}`)
           .then((response) => {
@@ -329,6 +360,10 @@ export default {
             handleError("Quiz not found.");
           });
     },
+    /**
+     * Searches for all quizzes created by the user.
+     * Fetches the quizzes from the server and displays them in the UI.
+     */
     searchAllQuizzes() {
       this.fetchedQuiz = null;
       this.editQuizVisible = false;
@@ -347,8 +382,11 @@ export default {
             handleError("No quizzes found.");
           });
     },
-
-
+    /**
+     * Deletes a quiz based on the quiz ID.
+     * Prompts the user for confirmation before deleting the quiz.
+     * @param quizId The ID of the quiz to be deleted.
+     */
     deleteQuiz(quizId) {
       EndpointService.delete(`quizzes/${quizId}`)
           .then(response => {
@@ -364,16 +402,26 @@ export default {
             handleError('An error occurred while deleting the quiz.');
           });
     },
+    /**
+     * Displays the edit quiz form in the UI.
+     * @param quiz The quiz to be edited.
+     */
     editQuiz(quiz) {
       this.fetchedQuiz = quiz;
       console.log("edit quiz");
       this.editQuizVisible = true;
       console.log("edit quiz visible: " + this.editQuizVisible);
     },
-
+    /**
+     * Hides the edit quiz form in the UI.
+     */
     cancelEditQuiz() {
       this.editQuizVisible = false;
     },
+    /**
+     * Saves the changes made to the quiz.
+     * Validates the quiz data and updates the quiz on the server.
+     */
     saveQuizChanges() {
       if (this.validateQuiz()) {
         const quizId = this.fetchedQuiz.id;
@@ -381,7 +429,6 @@ export default {
         this.updateQuizData.startDate = this.fetchedQuiz.editQuizDate;
         this.updateQuizData.duration = this.fetchedQuiz.editQuizDuration;
 
-        // Continue with your save logic...
         EndpointService.put(`quizzes/${quizId}/startDate/${this.updateQuizData.startDate}/duration/${this.updateQuizData.duration}`)
 
             .then((response) => {
@@ -399,7 +446,10 @@ export default {
             });
       }
     },
-
+    /**
+     * Validates the quiz data.
+     * @returns {boolean} True if the quiz data is valid, false otherwise.
+     */
     validateQuiz() {
       if (this.fetchedQuiz.editQuizDate === "") {
         handleError("Please select a date");
@@ -420,6 +470,10 @@ export default {
 
       return true;
     },
+    /**
+     * Handles the upload of a profile picture.
+     * @param event The event containing the uploaded file.
+     */
     handleFileUpload(event) {
       const file = event.target.files[0];
       if (file) {

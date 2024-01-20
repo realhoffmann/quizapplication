@@ -1,7 +1,9 @@
+<!-- CreateQuestionView -->
 <template>
   <div class="home">
     <h1>Create Question & Answers</h1>
   </div>
+  <!-- QuestionComponent -->
   <div>
     <div v-for="index in questionComponentsCount" :key="index">
       <CreateQuestionMolecule ref="questionComponents" />
@@ -29,6 +31,9 @@ export default {
     };
   },
   methods: {
+    /**
+     * Adds a new question if all fields are filled in and one correct answer is selected.
+     */
     addQuestion() {
       if (this.$refs.questionComponents.some((component) => component.getQuestionFromForm().question === "")) {
         handleError("Please fill in all questions");
@@ -47,6 +52,9 @@ export default {
 
       this.questionComponentsCount++;
     },
+    /**
+     * Submits the quiz if all fields are filled in and one correct answer is selected.
+     */
     submit() {
       const questionComponents = this.$refs.questionComponents;
       this.quizQuestions = questionComponents.map((component) => component.getQuestionFromForm());

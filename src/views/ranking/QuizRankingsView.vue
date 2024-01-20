@@ -1,7 +1,9 @@
+<!-- QuizRankingsView -->
 <template>
   <div class="home">
     <h1>Rankings</h1>
   </div>
+  <!-- Search Form -->
   <div class="container d-flex justify-content-center align-items-center">
     <div class="card searchForm">
       <div class="card-body">
@@ -27,6 +29,9 @@ export default {
     RankingsMolecule,
   },
   methods: {
+    /**
+     * Searches for a quiz with the given id.
+     */
     searchQuiz() {
       EndpointService.get(`quizzes/${this.searchQuery}/participants`)
         .then((response) => {
@@ -47,6 +52,9 @@ export default {
         this.searchQuiz();
       }
     },
+    /**
+     * Checks if the given value is a valid number.
+     */
     isValidNumber(value) {
       return !isNaN(value);
     },

@@ -1,3 +1,4 @@
+<!-- CreateQuizView -->
 <template>
     <div class="home">
         <h1>Create Quiz!</h1>
@@ -16,6 +17,9 @@ export default {
     },
 
   methods: {
+    /**
+     * Stores the selected category.
+     */
     handleCategoryClicked(category) {
       const store = useAppStore();
       store.setSelectedCategory(category);

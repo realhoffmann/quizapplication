@@ -1,3 +1,4 @@
+<!-- ListUserView -->
 <template>
   <div class="home">
     <h1>Users</h1>
@@ -5,6 +6,7 @@
       <div class="card searchForm col-md-5">
         <div class="card-body">
           <div class="input-group">
+            <!-- Search Query -->
             <input type="text" class="form-control" placeholder="Search for users" aria-label="Search for users" v-model="searchQuery">
             <button class="btn search-button" @click="searchUsers">Search</button>
           </div>
@@ -31,6 +33,9 @@ import EndpointService from "@/services/server/EndpointService";
 
 export default {
   name: "ListUserView",
+  /**
+   * Data properties
+   */
   data() {
     return {
       userIdsArray: [],
@@ -57,9 +62,15 @@ export default {
     this.loadUserIds();
   },
   methods: {
+    /**
+     * Navigates to the user view.
+     */
     goToUserView(userId) {
       this.$router.push({ name: "admin", params: { userId: userId } });
     },
+    /**
+     * Loads all user ids.
+     */
     loadUserIds() {
       EndpointService.get("users/all")
           .then((response) => {
@@ -70,6 +81,9 @@ export default {
             this.userIdsArray = [];
           });
     },
+    /**
+     * Searches for users.
+     */
     searchUsers() {
       this.loadUserIds();
     },
