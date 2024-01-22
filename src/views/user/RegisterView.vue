@@ -86,6 +86,7 @@ export default {
      * Handles submit of the form
      */
     async handleSubmit() {
+      console.log("Registering user:", this.user);
       await registerUser(this.user, this.confirmPassword, this.$router).then((result) => {
         if (result) {
           this.goToLogin();

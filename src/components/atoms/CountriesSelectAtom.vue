@@ -1,19 +1,17 @@
-
 <template>
-  <div>
     <select id="country-selector" class="form-control" v-model="selectedCountry" required>
-      <option disabled value="none">-- Choose a country --</option>
       <option v-for="country in countries" :key="country.code" :value="country.code">{{ country.name }}</option>
     </select>
-  </div>
 </template>
-
 
 <script>
 export default {
+  props: {
+    country: String,
+  },
   data() {
     return {
-      selectedCountry: 'none',
+      selectedCountry: this.country || 'none',
       countries: [
         { code: 'AT', name: 'Austria' },
         { code: 'DE', name: 'Germany'},
@@ -49,6 +47,7 @@ export default {
   },
   watch: {
     selectedCountry(newCountry) {
+      console.log("Selected Country:", newCountry);
       this.$emit('input', newCountry);
     },
   },
